@@ -1,0 +1,2 @@
+org.joml.QuaterniondInterpolator$SvdDecomposition3d
+org.joml.QuaterniondInterpolator
