@@ -14,8 +14,9 @@ package cameraproject;
 import java.nio.FloatBuffer;
 import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GL20;
 import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL13.*;
 
 public class Shader {
     private int program;
@@ -59,7 +60,7 @@ public Shader (){
     glShaderSource(vs,vertexShaderSource);
     glCompileShader(vs);
     
-    if(glGetShaderi(vs,GL_COMPILE_STATUS)!=1){
+    if(glGetShader(vs,GL_COMPILE_STATUS)!=1){
         System.out.println("error vert");
     }
     
@@ -67,7 +68,7 @@ public Shader (){
     glShaderSource(fs,fragmentShaderSource);
     glCompileShader(fs);
     
-    if(glGetShaderi(fs,GL_COMPILE_STATUS)!=1){
+    if(glGetShader(fs,GL_COMPILE_STATUS)!=1){
         System.out.println("error frag");
     }
     
@@ -86,7 +87,7 @@ public void setUniform(String name, Matrix4f value){
     FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
     value.get(buffer);
     if(location!=-1){
-        glUniformMatrix4fv(location, false, buffer);
+        GL20.glUniformMatrix4(location, false, buffer);
     }
 }
 

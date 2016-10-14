@@ -5,6 +5,12 @@
  */
 package cameraproject;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,20 +19,18 @@ import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjgl.*;
-import org.lwjgl.glfw.*;
-
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.opengl.GL;
-
-import static org.lwjgl.glfw.Callbacks.*;
-import static org.lwjgl.glfw.GLFW.*;
-import org.lwjgl.opengl.GL11;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryUtil.*;
-
+import org.lwjgl.BufferUtils;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 
 /**
  *
@@ -41,6 +45,18 @@ public class CameraProject {
     private CarrierS carrier;
     private Land land;
     private int imgCounter;
+    
+    private State cameraState;
+    private boolean moving;
+    private float stepSize;
+    
+    private final int DISPLAY_WIDTH=1500;
+    private final int DISPLAY_HEIGHT=800;
+    
+    public enum State {
+        OVERVIEW, CARRIER
+    }
+        
 
     public void run() {
         imgCounter = 0;
@@ -49,53 +65,119 @@ public class CameraProject {
             init();
             loop();
 
-            // Free the window callbacks and destroy the window
-            glfwFreeCallbacks(window);
-            glfwDestroyWindow(window);
         } finally {
-            // Terminate GLFW and free the error callback
-            glfwTerminate();
-            glfwSetErrorCallback(null).free();
+            System.out.println("Error in run");
         }
+        System.exit(0);
     }
 
     private void init() {
-        GLFWErrorCallback.createPrint(System.err).set();
-
-        if (!glfwInit()) {
-            throw new IllegalStateException("Unable to initialize GLFW");
-        }
+        JFrame frame = new JFrame();        
+         
+        // The exit button.
+        JButton button = new JButton("START");
+        JPanel sidePanel = new JPanel();
         
-        glfwDefaultWindowHints(); // optional, the current window hints are already the default
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
-        //glfwWindowHint(ENABLE_OPENGL_2X_SMOOTH);
+        JLabel labelInitPos=new JLabel("Initial position");
+        JLabel labelEndPos=new JLabel("Endposition");
+        JTextField textFieldInitPosx = new JTextField(5);
+        JTextField textFieldInitPosy = new JTextField(5);
         
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-        glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+        JTextField textFieldEndPosx = new JTextField(5);
+        JTextField textFieldEndPosy = new JTextField(5);
+        
+        
+        
+        JTextField textField = new JTextField(10);
+        textField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                //stepSize=convertInput(textField.getText());
+            }
 
-        wWidth = 1500;
-        wHeight = 800;
-        // Create the window
-        window = glfwCreateWindow(wWidth, wHeight, "Hello World!", NULL, NULL);
-        if (window == NULL) {
-            throw new RuntimeException("Failed to create the GLFW window");
-        }
-
-        // Setup a key callback. It will be called every time a key is pressed, repeated or released.
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                glfwSetWindowShouldClose(window, true); // We will detect this in our rendering loop
+            private float convertInput(String text) {
+                float ret=0;
+                
+                try{
+                    ret=Float.parseFloat(text);
+                }catch(Exception ex){
+                }
+                return ret;
             }
         });
+        
+        sidePanel.setSize(300,DISPLAY_HEIGHT);
+        sidePanel.add(button);
+        sidePanel.add(textField);
+        
+        sidePanel.add(labelInitPos);
+        sidePanel.add(textFieldInitPosx);
+        sidePanel.add(textFieldInitPosy);
+        sidePanel.add(labelEndPos);
+        sidePanel.add(textFieldEndPosx);
+        sidePanel.add(textFieldEndPosy);
+        
+         
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                moving=true;
+                stepSize=convertInput(textField.getText());
+            }
+            
+            private float convertInput(String text) {
+                float ret=0;
+                
+                try{
+                    ret=Float.parseFloat(text);
+                }catch(Exception ex){
+                }
+                return ret;
+            }
+        });
+         
+        // Create a new canvas and set its size.
+        Canvas canvas = new Canvas();
+        // Must be 640*480 to match the size of an Env3D window
+        canvas.setSize(DISPLAY_WIDTH, DISPLAY_HEIGHT);
+        // This is the magic!  The setParent method attaches the 
+        // opengl window to the awt canvas.
+        try {
+            Display.setParent(canvas);
+        } catch (Exception e) {
+        }
+         
+        // Construct the GUI as normal
+        frame.add(sidePanel, BorderLayout.EAST);
+        frame.add(canvas, BorderLayout.CENTER);
+         
+        frame.pack();
+        frame.setVisible(true);
 
-        GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-        glfwSetWindowPos(
-                window, 0, 0);
-        glfwMakeContextCurrent(window);
-        glfwSwapInterval(1);
-        glfwShowWindow(window);
-       
+        try {
+            Display.setDisplayMode(new DisplayMode(1500,800));
+            Display.setFullscreen(false);
+            Display.setTitle("Camera project");
+            Display.create();
+        } catch (LWJGLException ex) {
+            Logger.getLogger(CameraProject.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        wWidth = 1500;
+        wHeight = 800;
+        
+            glClearColor(0.0f,0.0f,0.0f,0.0f);
+    glDisable(GL_DEPTH_TEST);
+    glDisable(GL_LIGHTING);
+    glViewport(0,0,DISPLAY_WIDTH,DISPLAY_HEIGHT);
+ 
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluOrtho2D(0.0f,DISPLAY_WIDTH,0.0f,DISPLAY_HEIGHT);
+    glPushMatrix();
+ 
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPushMatrix();
     }
 
     private Model drawCarrier(float posX, float posY) {
@@ -109,89 +191,61 @@ public class CameraProject {
     }
    
     private void loop() {
-        
-                carrier = new CarrierS(-0.5f,0.5f,0.5f);
+        carrier = new CarrierS(-0.5f,0.5f,0.5f);
         land=new Land(wWidth, wHeight);
-        GL.createCapabilities();
-
         // Set the clear color
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        GL11.glMatrixMode(GL11.GL_PROJECTION);
-        GL11.glLoadIdentity();
-        GL11.glOrtho(0, 900, 0, 600, 100, -100);
-        GL11.glMatrixMode(GL11.GL_MODELVIEW);
-
-        //Set the camera perspective
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, 900, 0, 600, 100, -100);
+        glMatrixMode(GL_MODELVIEW);
         glLoadIdentity(); //Reset the camera
-        
-        
-/*        IntBuffer w = BufferUtils.createIntBuffer(1);
-        IntBuffer h = BufferUtils.createIntBuffer(1);
-        glfwGetWindowSize(window, w, h);
-        int width = w.get(0);
-        int height = h.get(0);
-
-        
-        int panWidth = 300;
-        int panHeight = height;
-
-        GUILoader guiLoader = new GUILoader();
-        Panel pan = new Panel(width-panWidth,0,panWidth,panHeight,new Color(0.98f,0.98f,0.98f));
-        guiLoader.attach(pan);
-        guiLoader.attach(new Label(25,50,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,100,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,150,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,200,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,250,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,300,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        guiLoader.attach(new Label(25,350,panWidth-50,30,new Color(0.9f,0.9f,0.9f),pan));
-        
-        guiLoader.attach(new Label(25,450,panWidth-50,panHeight-30-450,new Color(0.9f,0.9f,0.9f),pan));
-        glAttachShader(program, vs);*/
 
         Shader shader = new Shader();
         Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f);
         Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(1f,0f,10f),35f);
+        Camera currentCamera = camera;
         
         int mainWidth=wWidth-300;
         int mainHeight=wHeight;
-        int sideHeight=wHeight-200;
+        
+        moving=false;
+        stepSize=0.5f;
         
         Vector3f carrierPos=new Vector3f(0,0,9f);
-             
-        while (!glfwWindowShouldClose(window)) {
+        
+        cameraState=State.OVERVIEW;
+
+      while(!Display.isCloseRequested()) {
+      if(Display.isVisible()) {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
-            GL11.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer	
-            //glLoadIdentity();	
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-            //glClear(GL_COLOR_BUFFER_BIT);
-            
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer	
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);            
             shader.bind();
-            //shader.setUniform("projection", camera2.getProjection());
             
             camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
             glViewport(0,0,mainWidth,mainHeight);
-            drawMainView(shader,carrierPos,camera2);
-            carrierPos.x+=0.5f;
+            drawMainView(shader,carrierPos,currentCamera);
             
-            camera2.setPosition(carrierPos);
+            if(moving){
+                carrierPos.x+=stepSize;
+                camera2.setPosition(carrierPos);
+                System.out.println(stepSize);
             
-            glViewport(mainWidth,sideHeight,300,200);
-            //camera.setPosition(carrierPos);
-            
-            //drawMainView(shader,carrierPos,camera);
-                     
-            
-            glfwSwapBuffers(window); // swap the color buffers
-            glfwPollEvents();
-            if(carrierPos.x<2.6f){
-                System.out.println("taken");
-                takePicture();
-            }else{break;}
-            
-            
-        }
+                if(carrierPos.x<2.6f){
+                    System.out.println("taken");
+                    takePicture();
+                }else{moving=false;}
+            }
+      }
+      
+      Display.update();
+      Display.sync(60);
+    }
+      
+      System.out.println("destroy");
+      Display.destroy();
     }
     
     public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera){
@@ -212,10 +266,10 @@ public class CameraProject {
         
         String name;
         
-        GL11.glReadBuffer(GL11.GL_FRONT);
+        glReadBuffer(GL_FRONT);
         int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
-        GL11.glReadPixels(0, 0, width, height, GL11.GL_RGBA, GL11.GL_UNSIGNED_BYTE, buffer );
+        glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
        
         name="img/screenshot" + imgCounter + ".jpg"; 
         imgCounter++;
