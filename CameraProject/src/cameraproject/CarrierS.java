@@ -44,7 +44,7 @@ public class CarrierS extends SceneObject{
     }
     
     public void setModel(float posX, float posY){
-        Texture tex= this.loadTexture("carrier.png");
+        Texture tex= this.loadTexture("img/carrier.png");
         
         float size = 0.5f;
         

@@ -18,13 +18,18 @@ public class Camera {
     protected Matrix4f view;
     protected Vector3f focus;
     protected float fov;
+    protected float alpha;
+    protected float omega;
     
     protected int width;
     protected int height;
 
-public Camera(int width, int height, Vector3f eye, Vector3f focus, float fov){
+public Camera(int width, int height, Vector3f eye, Vector3f focus, float fov, float alpha, float omega){
     this.width=width;
     this.height=height;
+    
+    this.alpha=alpha;
+    this.omega=omega;
     
     position= eye;
     this.focus=focus;
@@ -46,7 +51,10 @@ public Vector3f getPosition(){
 }
 
 public Matrix4f getProjection(){
-    view=new Matrix4f().setLookAt(this.position, this.focus, new Vector3f(0,1,0));
+    Vector3f foc=new Vector3f(focus.x, focus.y,focus.z);
+    foc.x=this.focus.z*(float)Math.tan(alpha)+this.position.x;
+    foc.y=this.focus.z*(float)Math.tan(omega)+this.position.y;
+    view=new Matrix4f().setLookAt(this.position, foc, new Vector3f(0,1,0));
     projection=new Matrix4f().setPerspective(fov, width/height, 0.1f, 100f);
     Matrix4f target = projection.mul(view);
     return target;

@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -131,6 +132,8 @@ public class CameraProject {
         TextFieldListener listener = new TextFieldListener();
         
         JButton button = new JButton("START");
+        JButton buttonLoad = new JButton("Load Texture");
+        
         JPanel initPosPanel = new JPanel();
         JPanel endPosPanel = new JPanel();
         JPanel stepSizePanel = new JPanel();
@@ -202,8 +205,8 @@ public class CameraProject {
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
         
         sidePanel.setSize(300,DISPLAY_HEIGHT);
-        sidePanel.add(button);
-        
+
+        sidePanel.add(Box.createVerticalStrut(50));
         sidePanel.add(stepSizePanel);
         sidePanel.add(Box.createVerticalStrut(10));
         sidePanel.add(initPosPanel);
@@ -214,6 +217,11 @@ public class CameraProject {
         sidePanel.add(Box.createVerticalStrut(10));
         sidePanel.add(cameraControlPanel);
         
+        sidePanel.add(button);
+        sidePanel.add(buttonLoad);
+       
+        JFileChooser fc = new JFileChooser();
+
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -235,6 +243,17 @@ public class CameraProject {
                 return ret;
             }
         });
+        
+        buttonLoad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                int returnVal = fc.showOpenDialog(sidePanel);
+                    if (returnVal == JFileChooser.APPROVE_OPTION) {
+                        File file = fc.getSelectedFile();
+                        System.out.println(file.getName());
+                        land.setTextureName(file.getAbsolutePath());
+                }
+        }    });
     }
 
     private Model drawCarrier(float posX, float posY) {
@@ -249,7 +268,7 @@ public class CameraProject {
    
     private void loop() {
         carrier = new CarrierS(-0.5f,0.5f,9f);
-        land=new Land(wWidth, wHeight);
+        land=new Land(wWidth, wHeight, "img/tahiti.jpg");
         target=new Target();
         // Set the clear color
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -261,8 +280,8 @@ public class CameraProject {
         glLoadIdentity(); //Reset the camera
 
         Shader shader = new Shader();
-        Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f);
-        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(1f,0f,10f),35f);
+        Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f,0,0);
+        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(1f,0f,10f),35f,0,0);
         Camera currentCamera = camera;
         
         int mainWidth=wWidth-300;
@@ -287,6 +306,9 @@ public class CameraProject {
             if(doMove){
                 moving=true;
                 doMove=false;
+                
+                camera2.alpha=inputData.alpha.getValue();
+                camera2.omega=inputData.omega.getValue();
             }
             
             if(moving){

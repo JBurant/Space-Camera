@@ -5,6 +5,8 @@
  */
 package cameraproject;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
@@ -16,9 +18,9 @@ import static org.lwjgl.opengl.GL11.glEnable;
 public class SceneObject {
     public Model model;
     
-        public Texture loadTexture(String name){
+    public Texture loadTexture(String name){    
         glEnable(GL_TEXTURE_2D);
-        Texture tex = new Texture("img/"+name);
+        Texture tex = new Texture(name);
         tex.bind(0);
         glDisable(GL_TEXTURE_2D);
         

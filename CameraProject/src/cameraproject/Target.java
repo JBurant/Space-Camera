@@ -13,7 +13,7 @@ public class Target extends SceneObject{
     public Target(){}
     
     public void setModel(float posX, float posY){
-        Texture tex= this.loadTexture("target.png");
+        Texture tex= this.loadTexture("img/target.png");
         
         float size = 0.2f;
         

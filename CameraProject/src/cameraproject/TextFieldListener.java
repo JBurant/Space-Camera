@@ -56,7 +56,6 @@ public class TextFieldListener implements DocumentListener{
         }catch(Exception ex){
             //Logger.getLogger(TextFieldListener.class.getName()).log(Level.SEVERE, null, ex);     
         }
-
         
         System.out.println(text);
     }

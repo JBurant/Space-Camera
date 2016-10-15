@@ -15,14 +15,16 @@ public class Land extends SceneObject{
     
     private int wWidth;
     private int wHeight;
+    private String textureName;
     
-    public Land(int wWidth, int wHeight){
+    public Land(int wWidth, int wHeight,String textureName){
         this.wWidth=wWidth;
         this.wHeight=wHeight;
+        this.textureName = textureName;
     }
     
     public void setModel(){
-        Texture tex=this.loadTexture("tahiti.jpg");
+        Texture tex=this.loadTexture(textureName);
         
         float landWidth=tex.width;
         float landHeight;
@@ -74,4 +76,12 @@ public class Land extends SceneObject{
                 
         this.model = new Model(vertices, texture, indices);
     }   
+
+    public String getTextureName() {
+        return textureName;
+    }
+
+    public void setTextureName(String textureName) {
+        this.textureName = textureName;
+    }
 }
