@@ -7,24 +7,22 @@ package cameraproject;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static org.lwjgl.opengl.GL11.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.nio.ByteBuffer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.joml.Matrix4f;
 import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -44,11 +42,17 @@ public class CameraProject {
     
     private CarrierS carrier;
     private Land land;
+    private Target target;
+    
     private int imgCounter;
     
     private State cameraState;
     private boolean moving;
     private float stepSize;
+    private InputData inputData;
+    private boolean doMove;
+    
+    private Vector3f step;
     
     private final int DISPLAY_WIDTH=1500;
     private final int DISPLAY_HEIGHT=800;
@@ -72,70 +76,12 @@ public class CameraProject {
     }
 
     private void init() {
+        inputData=new InputData();
+        
         JFrame frame = new JFrame();        
-         
-        // The exit button.
-        JButton button = new JButton("START");
+        
         JPanel sidePanel = new JPanel();
-        
-        JLabel labelInitPos=new JLabel("Initial position");
-        JLabel labelEndPos=new JLabel("Endposition");
-        JTextField textFieldInitPosx = new JTextField(5);
-        JTextField textFieldInitPosy = new JTextField(5);
-        
-        JTextField textFieldEndPosx = new JTextField(5);
-        JTextField textFieldEndPosy = new JTextField(5);
-        
-        
-        
-        JTextField textField = new JTextField(10);
-        textField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                //stepSize=convertInput(textField.getText());
-            }
-
-            private float convertInput(String text) {
-                float ret=0;
-                
-                try{
-                    ret=Float.parseFloat(text);
-                }catch(Exception ex){
-                }
-                return ret;
-            }
-        });
-        
-        sidePanel.setSize(300,DISPLAY_HEIGHT);
-        sidePanel.add(button);
-        sidePanel.add(textField);
-        
-        sidePanel.add(labelInitPos);
-        sidePanel.add(textFieldInitPosx);
-        sidePanel.add(textFieldInitPosy);
-        sidePanel.add(labelEndPos);
-        sidePanel.add(textFieldEndPosx);
-        sidePanel.add(textFieldEndPosy);
-        
-         
-        button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                moving=true;
-                stepSize=convertInput(textField.getText());
-            }
-            
-            private float convertInput(String text) {
-                float ret=0;
-                
-                try{
-                    ret=Float.parseFloat(text);
-                }catch(Exception ex){
-                }
-                return ret;
-            }
-        });
-         
+        setUpGUI(sidePanel);
         // Create a new canvas and set its size.
         Canvas canvas = new Canvas();
         // Must be 640*480 to match the size of an Env3D window
@@ -153,6 +99,7 @@ public class CameraProject {
          
         frame.pack();
         frame.setVisible(true);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         try {
             Display.setDisplayMode(new DisplayMode(1500,800));
@@ -179,6 +126,116 @@ public class CameraProject {
     glLoadIdentity();
     glPushMatrix();
     }
+    
+    private void setUpGUI(JPanel sidePanel){
+        TextFieldListener listener = new TextFieldListener();
+        
+        JButton button = new JButton("START");
+        JPanel initPosPanel = new JPanel();
+        JPanel endPosPanel = new JPanel();
+        JPanel stepSizePanel = new JPanel();
+        
+        JPanel cameraControlPanel = new JPanel();
+        
+        initPosPanel.setLayout(new BoxLayout(initPosPanel, BoxLayout.LINE_AXIS));
+        endPosPanel.setLayout(new BoxLayout(endPosPanel, BoxLayout.LINE_AXIS));
+        stepSizePanel.setLayout(new BoxLayout(stepSizePanel, BoxLayout.LINE_AXIS));
+        cameraControlPanel.setLayout(new BoxLayout(cameraControlPanel, BoxLayout.LINE_AXIS));
+        
+        JLabel labelInitPos=new JLabel("Initial position");
+        JLabel labelEndPos=new JLabel("End position");
+        JLabel labelStepSize=new JLabel("Number of Images");
+        JLabel cameraLabel=new JLabel("Camera angles");
+        JLabel cameraLabelAlpha = new JLabel("alpha");
+        JLabel cameraLabelOmega = new JLabel("omega");
+        
+        JTextField textFieldInitPosx = new JTextField(5);
+        textFieldInitPosx.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldInitPosx.getDocument(), inputData.initPosX);
+        JTextField textFieldInitPosy = new JTextField(5);        
+        textFieldInitPosy.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldInitPosy.getDocument(), inputData.initPosY);
+        JTextField textFieldEndPosx = new JTextField(5);
+        textFieldEndPosx.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldEndPosx.getDocument(), inputData.endPosX);
+        JTextField textFieldEndPosy = new JTextField(5);
+        textFieldEndPosy.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldEndPosy.getDocument(), inputData.endPosY);
+        JTextField textFieldStepSize = new JTextField(10);
+        textFieldStepSize.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldStepSize.getDocument(), inputData.noImages);
+        
+        JTextField textFieldAlpha = new JTextField(3);
+        textFieldAlpha.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldAlpha.getDocument(), inputData.alpha);
+        JTextField textFieldOmega = new JTextField(3);
+        textFieldOmega.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldOmega.getDocument(), inputData.omega);
+        
+        stepSizePanel.add(labelStepSize);
+        stepSizePanel.add(Box.createHorizontalStrut(10));
+        stepSizePanel.add(textFieldStepSize);
+        stepSizePanel.setMaximumSize(stepSizePanel.getPreferredSize());
+        
+        initPosPanel.add(labelInitPos);
+        initPosPanel.add(Box.createHorizontalStrut(10));
+        initPosPanel.add(textFieldInitPosx);
+        initPosPanel.add(Box.createHorizontalStrut(10));
+        initPosPanel.add(textFieldInitPosy);
+        initPosPanel.setMaximumSize(initPosPanel.getPreferredSize());
+        
+        endPosPanel.add(labelEndPos);
+        endPosPanel.add(Box.createHorizontalStrut(10));
+        endPosPanel.add(textFieldEndPosx);
+        endPosPanel.add(Box.createHorizontalStrut(10));
+        endPosPanel.add(textFieldEndPosy);
+        endPosPanel.setMaximumSize(endPosPanel.getPreferredSize());
+        
+        cameraLabel.setMaximumSize(cameraLabel.getPreferredSize());
+        
+        cameraControlPanel.add(cameraLabelAlpha);
+        cameraControlPanel.add(textFieldAlpha);
+        cameraControlPanel.add(cameraLabelOmega);
+        cameraControlPanel.add(textFieldOmega);
+        cameraControlPanel.setMaximumSize(cameraControlPanel.getPreferredSize());
+        
+        sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
+        
+        sidePanel.setSize(300,DISPLAY_HEIGHT);
+        sidePanel.add(button);
+        
+        sidePanel.add(stepSizePanel);
+        sidePanel.add(Box.createVerticalStrut(10));
+        sidePanel.add(initPosPanel);
+        sidePanel.add(Box.createVerticalStrut(10));
+        sidePanel.add(endPosPanel);
+        sidePanel.add(Box.createVerticalStrut(30));
+        sidePanel.add(cameraLabel);
+        sidePanel.add(Box.createVerticalStrut(10));
+        sidePanel.add(cameraControlPanel);
+        
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                step=new Vector3f();
+                step.x=(inputData.endPosX.getValue()-inputData.initPosX.getValue())/inputData.noImages.getValue();
+                step.y=(inputData.endPosY.getValue()-inputData.initPosY.getValue())/inputData.noImages.getValue();
+
+                System.out.println(step);
+                doMove=true;
+            }
+            
+            private int convertInput(String text) {
+                int ret=0;
+                
+                try{
+                    ret=Integer.parseInt(text);
+                }catch(Exception ex){
+                }
+                return ret;
+            }
+        });
+    }
 
     private Model drawCarrier(float posX, float posY) {
         carrier.setModel(posX,posY);
@@ -191,8 +248,9 @@ public class CameraProject {
     }
    
     private void loop() {
-        carrier = new CarrierS(-0.5f,0.5f,0.5f);
+        carrier = new CarrierS(-0.5f,0.5f,9f);
         land=new Land(wWidth, wHeight);
+        target=new Target();
         // Set the clear color
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -214,9 +272,11 @@ public class CameraProject {
         stepSize=0.5f;
         
         Vector3f carrierPos=new Vector3f(0,0,9f);
+        Vector3f targetPos=new Vector3f(1f,0f,9f);
         
         cameraState=State.OVERVIEW;
-
+        boolean takePic=false;
+        
       while(!Display.isCloseRequested()) {
       if(Display.isVisible()) {
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
@@ -224,31 +284,53 @@ public class CameraProject {
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);            
             shader.bind();
             
-            camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
-            glViewport(0,0,mainWidth,mainHeight);
-            drawMainView(shader,carrierPos,currentCamera);
+            if(doMove){
+                moving=true;
+                doMove=false;
+            }
             
             if(moving){
-                carrierPos.x+=stepSize;
+                currentCamera=camera2;
+                carrierPos.add(step);
                 camera2.setPosition(carrierPos);
-                System.out.println(stepSize);
+            }else{
+                currentCamera=camera;
+            }
             
-                if(carrierPos.x<2.6f){
+            targetPos.x=inputData.endPosX.getValue();
+            targetPos.y=inputData.endPosY.getValue();
+            
+            camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
+            glViewport(0,0,mainWidth,mainHeight);
+            drawMainView(shader,carrierPos,currentCamera,targetPos);
+            
+            Display.update();
+            Display.sync(60);
+            
+            if(takePic){
+                if(imgCounter<inputData.noImages.getValue()){
                     System.out.println("taken");
+                    System.out.println(carrierPos);
                     takePicture();
-                }else{moving=false;}
+                }else{
+                    moving=false;
+                    imgCounter=0;
+                }
+            }else{
+                carrierPos.x=inputData.initPosX.getValue();
+                carrierPos.y=inputData.initPosY.getValue();
             }
       }
       
-      Display.update();
-      Display.sync(60);
+      takePic=moving;
+
     }
       
       System.out.println("destroy");
       Display.destroy();
     }
     
-    public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera){
+    public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera, Vector3f targetPos){
         Model model;
         
         shader.setUniform("projection", camera.getProjection()); 
@@ -258,6 +340,13 @@ public class CameraProject {
         model.render();
         model=drawCarrier(carrierPos.x,carrierPos.y);
         model.render();
+        model=drawTarget(targetPos.x,targetPos.y);
+        model.render();
+    }
+    
+    private Model drawTarget(float posX, float posY){
+        target.setModel(posX,posY);
+        return target.model;
     }
     
     public void takePicture(){
@@ -271,7 +360,7 @@ public class CameraProject {
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
        
-        name="img/screenshot" + imgCounter + ".jpg"; 
+        name="img/screenshots/screenshot" + imgCounter + ".jpg"; 
         imgCounter++;
         saveImage(name, width, height, buffer, bpp);
     }
