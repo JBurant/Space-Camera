@@ -29,6 +29,9 @@ public class CarrierS extends SceneObject{
         this.cameraY = 0;
         this.cameraAlpha = 0;
         this.cameraAlpha = 0;
+        
+        this.textureName="img/carrier.png";
+        this.loadTexture();
     }
 
     public CarrierS(float coorX, float coorY, float coorZ, float cameraX, float cameraY, float cameraAlpha, float cameraBeta) {
@@ -44,7 +47,7 @@ public class CarrierS extends SceneObject{
     }
     
     public void setModel(float posX, float posY){
-        Texture tex= this.loadTexture("img/carrier.png");
+        this.tex.bind(0);
         
         float size = 0.5f;
         
@@ -54,24 +57,7 @@ public class CarrierS extends SceneObject{
             posX + size, posY + size, posZ,  //TOP RIGHT
             posX-size, posY + size, posZ,    //TOP LEFT
             posX-size, posY-size, posZ,     //BOTTOM LEFT
-            posX + size, posY-size, posZ,   //BOTTOM RIGHT
-          /*  
-            posX + size, posY, posZ,
-            posX + size, posY + size, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX + size, posY + size, posZ,
-            posX , posY+size, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX, posY + size, posZ,
-            posX, posY, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX + size, posY , posZ,
-            posX, posY, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-        */   
+            posX + size, posY-size, posZ,   //BOTTOM RIGHT   
         };
         
         float[] texture = new float[]{

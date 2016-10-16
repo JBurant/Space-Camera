@@ -29,6 +29,7 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
+import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 
 /**
@@ -49,6 +50,7 @@ public class CameraProject {
     
     private State cameraState;
     private boolean moving;
+    private boolean textureChanged;
     private float stepSize;
     private InputData inputData;
     private boolean doMove;
@@ -146,32 +148,40 @@ public class CameraProject {
         cameraControlPanel.setLayout(new BoxLayout(cameraControlPanel, BoxLayout.LINE_AXIS));
         
         JLabel labelInitPos=new JLabel("Initial position");
-        JLabel labelEndPos=new JLabel("End position");
+        JLabel labelEndPos=new JLabel("End position   ");
         JLabel labelStepSize=new JLabel("Number of Images");
         JLabel cameraLabel=new JLabel("Camera angles");
         JLabel cameraLabelAlpha = new JLabel("alpha");
         JLabel cameraLabelOmega = new JLabel("omega");
         
-        JTextField textFieldInitPosx = new JTextField(5);
+        JTextField textFieldInitPosx = new JTextField("0",5);
         textFieldInitPosx.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldInitPosx.getDocument(), inputData.initPosX);
-        JTextField textFieldInitPosy = new JTextField(5);        
+        JTextField textFieldInitPosy = new JTextField("0",5);        
         textFieldInitPosy.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldInitPosy.getDocument(), inputData.initPosY);
-        JTextField textFieldEndPosx = new JTextField(5);
+        JTextField textFieldInitPosz = new JTextField("9",5);
+        textFieldInitPosz.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldInitPosz.getDocument(), inputData.initPosZ);
+
+        JTextField textFieldEndPosx = new JTextField("0",5);
         textFieldEndPosx.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldEndPosx.getDocument(), inputData.endPosX);
-        JTextField textFieldEndPosy = new JTextField(5);
+        JTextField textFieldEndPosy = new JTextField("0",5);
         textFieldEndPosy.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldEndPosy.getDocument(), inputData.endPosY);
+        JTextField textFieldEndPosz = new JTextField("9",5);
+        textFieldEndPosz.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldEndPosz.getDocument(), inputData.endPosZ);
+        
         JTextField textFieldStepSize = new JTextField(10);
         textFieldStepSize.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldStepSize.getDocument(), inputData.noImages);
         
-        JTextField textFieldAlpha = new JTextField(3);
+        JTextField textFieldAlpha = new JTextField("0",3);
         textFieldAlpha.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldAlpha.getDocument(), inputData.alpha);
-        JTextField textFieldOmega = new JTextField(3);
+        JTextField textFieldOmega = new JTextField("0",3);
         textFieldOmega.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldOmega.getDocument(), inputData.omega);
         
@@ -185,6 +195,8 @@ public class CameraProject {
         initPosPanel.add(textFieldInitPosx);
         initPosPanel.add(Box.createHorizontalStrut(10));
         initPosPanel.add(textFieldInitPosy);
+        initPosPanel.add(Box.createHorizontalStrut(10));
+        initPosPanel.add(textFieldInitPosz);
         initPosPanel.setMaximumSize(initPosPanel.getPreferredSize());
         
         endPosPanel.add(labelEndPos);
@@ -192,6 +204,8 @@ public class CameraProject {
         endPosPanel.add(textFieldEndPosx);
         endPosPanel.add(Box.createHorizontalStrut(10));
         endPosPanel.add(textFieldEndPosy);
+        endPosPanel.add(Box.createHorizontalStrut(10));
+        endPosPanel.add(textFieldEndPosz);
         endPosPanel.setMaximumSize(endPosPanel.getPreferredSize());
         
         cameraLabel.setMaximumSize(cameraLabel.getPreferredSize());
@@ -228,19 +242,9 @@ public class CameraProject {
                 step=new Vector3f();
                 step.x=(inputData.endPosX.getValue()-inputData.initPosX.getValue())/inputData.noImages.getValue();
                 step.y=(inputData.endPosY.getValue()-inputData.initPosY.getValue())/inputData.noImages.getValue();
-
-                System.out.println(step);
-                doMove=true;
-            }
-            
-            private int convertInput(String text) {
-                int ret=0;
+                step.z=(inputData.endPosZ.getValue()-inputData.initPosZ.getValue())/inputData.noImages.getValue();
                 
-                try{
-                    ret=Integer.parseInt(text);
-                }catch(Exception ex){
-                }
-                return ret;
+                doMove=true;
             }
         });
         
@@ -252,6 +256,7 @@ public class CameraProject {
                         File file = fc.getSelectedFile();
                         System.out.println(file.getName());
                         land.setTextureName(file.getAbsolutePath());
+                        textureChanged=true;
                 }
         }    });
     }
@@ -270,9 +275,8 @@ public class CameraProject {
         carrier = new CarrierS(-0.5f,0.5f,9f);
         land=new Land(wWidth, wHeight, "img/tahiti.jpg");
         target=new Target();
-        // Set the clear color
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, 900, 0, 600, 100, -100);
@@ -298,10 +302,14 @@ public class CameraProject {
         
       while(!Display.isCloseRequested()) {
       if(Display.isVisible()) {
-            glClearColor(0.0f, 0.0f, 0.0f, 1.0f );
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer	
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);            
             shader.bind();
+            
+            if(textureChanged){
+                land.loadTexture();
+                textureChanged=false;
+            }
             
             if(doMove){
                 moving=true;
@@ -321,11 +329,14 @@ public class CameraProject {
             
             targetPos.x=inputData.endPosX.getValue();
             targetPos.y=inputData.endPosY.getValue();
+            targetPos.z=inputData.endPosY.getValue();
             
             camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
             glViewport(0,0,mainWidth,mainHeight);
             drawMainView(shader,carrierPos,currentCamera,targetPos);
             
+            glUseProgram(0);
+                        
             Display.update();
             Display.sync(60);
             
@@ -341,6 +352,7 @@ public class CameraProject {
             }else{
                 carrierPos.x=inputData.initPosX.getValue();
                 carrierPos.y=inputData.initPosY.getValue();
+                carrierPos.z=inputData.initPosZ.getValue();
             }
       }
       

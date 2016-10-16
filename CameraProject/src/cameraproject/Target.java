@@ -10,37 +10,22 @@ package cameraproject;
  * @author Jirka3
  */
 public class Target extends SceneObject{
-    public Target(){}
+    public Target(){
+        this.textureName = "img/target.png";
+        this.tex=this.loadTexture();
+    }
     
     public void setModel(float posX, float posY){
-        Texture tex= this.loadTexture("img/target.png");
+        this.tex.bind(0);
         
-        float size = 0.2f;
-        
+        float size = 0.2f;        
         float posZ=9f;
 
         float[] vertices = new float[]{
             posX + size, posY + size, posZ,  //TOP RIGHT
             posX-size, posY + size, posZ,    //TOP LEFT
             posX-size, posY-size, posZ,     //BOTTOM LEFT
-            posX + size, posY-size, posZ,   //BOTTOM RIGHT
-          /*  
-            posX + size, posY, posZ,
-            posX + size, posY + size, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX + size, posY + size, posZ,
-            posX , posY+size, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX, posY + size, posZ,
-            posX, posY, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-            
-            posX + size, posY , posZ,
-            posX, posY, posZ,
-            posX + size/2, posY + size/2,posZ-size/2,
-        */   
+            posX + size, posY-size, posZ,   //BOTTOM RIGHT   
         };
         
         float[] texture = new float[]{

@@ -22,8 +22,11 @@ public class Shader {
     private int program;
     private int vs;
     private int fs;
+    private FloatBuffer buffer;
 
 public Shader (){
+    buffer = BufferUtils.createFloatBuffer(16);
+    
     String vertexShaderSource = "#version 120\n"
                 + "\n"
                 + "attribute vec3 vertices;\n"
@@ -84,7 +87,6 @@ public Shader (){
 
 public void setUniform(String name, Matrix4f value){
     int location = glGetUniformLocation(program,name);
-    FloatBuffer buffer = BufferUtils.createFloatBuffer(16);
     value.get(buffer);
     if(location!=-1){
         GL20.glUniformMatrix4(location, false, buffer);

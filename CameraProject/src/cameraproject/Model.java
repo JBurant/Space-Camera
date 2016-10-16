@@ -21,7 +21,6 @@ public class Model {
     private int c_id;
     private int t_id;
     private int i_id;
-    public Color color;
     
     public Model(float[] vertices, float[]tex_coords, int[] indices){
         draw_count = indices.length;
@@ -91,13 +90,6 @@ public class Model {
     private FloatBuffer createBuffer (float[] data){
         FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
         buffer.put(data);
-        buffer.flip();
-        return buffer;
-    }
-    
-    private FloatBuffer createColorBuffer(float[] color){
-       FloatBuffer buffer = BufferUtils.createFloatBuffer(color.length);
-        buffer.put(color);
         buffer.flip();
         return buffer;
     }
