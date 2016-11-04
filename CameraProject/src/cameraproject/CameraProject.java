@@ -24,7 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import org.joml.Vector3f;
+import utils.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -33,38 +33,80 @@ import static org.lwjgl.opengl.GL20.glUseProgram;
 import static org.lwjgl.util.glu.GLU.gluOrtho2D;
 
 /**
- *
+ * This is the main class of the project.
+ * It sets up the GUI, the openGL and the initial values for spacecraft and camera. It also contains the main rendering
+ * loop and a method for saving the resulting image.
+ * 
  * @author jiri
+ *
  */
 public class CameraProject {
+    /**
+    * Height of the openGL window.
+    */
+    public int wHeight;
+    /**
+     * Width of the openGL window.
+     */
+    public int wWidth;
+    /**
+     * The space carrier object.
+     * Contains info about the position, size and camera angle.
+     */
+    public Carrier carrier;
+    /**
+     * The surface object.
+     * Contains info about the size and of the surface plane and its texture.
+     */
+    public Land land;
+    /**
+     * The target object.
+     * Symbolises the target area, where the carrier should go.
+     */
+    public Target target;
+    
+    /**
+     * Counts the number of images taken during flight.
+     * The spacecraft takes specified number of images, equally spaced.
+     */
+    public int imgCounter;
+    /**
+     * True if the carrier is moving.
+     */
+    public boolean moving;
+    /**
+     * True if a new texture has been loaded.
+     */
+    public boolean textureChanged;
+    /**
+     * Size of the flight step, distance between two images.
+     * Set by user from the GUI.
+     */
+    public float stepSize;
+    /**
+    * Interface between the input TextFields and application logic.
+    */
+    public InputData inputData;
+    /**
+    * Start moving the spacecraft.
+    */
+    public boolean doMove;
+    /**
+     * One flight step.
+     */
+    public Vector3f step;
+    /**
+     * Width of the created display.
+     */
+    public final int DISPLAY_WIDTH=1500;
+    /**
+     * Height of the created display.
+     */
+    public final int DISPLAY_HEIGHT=800;        
 
-    private long window;
-    private int wHeight;
-    private int wWidth;
-    
-    private CarrierS carrier;
-    private Land land;
-    private Target target;
-    
-    private int imgCounter;
-    
-    private State cameraState;
-    private boolean moving;
-    private boolean textureChanged;
-    private float stepSize;
-    private InputData inputData;
-    private boolean doMove;
-    
-    private Vector3f step;
-    
-    private final int DISPLAY_WIDTH=1500;
-    private final int DISPLAY_HEIGHT=800;
-    
-    public enum State {
-        OVERVIEW, CARRIER
-    }
-        
-
+    /**
+     * Initializes the application and enters the render loop.
+     */
     public void run() {
         imgCounter = 0;
         
@@ -78,7 +120,10 @@ public class CameraProject {
         System.exit(0);
     }
 
-    private void init() {
+    /**
+     * Initializes the GUI, openGL canvas and sets up openGL.
+     */
+    public void init() {
         inputData=new InputData();
         
         JFrame frame = new JFrame();        
@@ -99,13 +144,13 @@ public class CameraProject {
         // Construct the GUI as normal
         frame.add(sidePanel, BorderLayout.EAST);
         frame.add(canvas, BorderLayout.CENTER);
-         
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        //Create the Display
         try {
-            Display.setDisplayMode(new DisplayMode(1500,800));
+            Display.setDisplayMode(new DisplayMode(DISPLAY_WIDTH,DISPLAY_HEIGHT));
             Display.setFullscreen(false);
             Display.setTitle("Camera project");
             Display.create();
@@ -115,38 +160,46 @@ public class CameraProject {
         wWidth = 1500;
         wHeight = 800;
         
-            glClearColor(0.0f,0.0f,0.0f,0.0f);
-    glDisable(GL_DEPTH_TEST);
-    glDisable(GL_LIGHTING);
-    glViewport(0,0,DISPLAY_WIDTH,DISPLAY_HEIGHT);
+        //Set up the openGL
+        glClearColor(0.0f,0.0f,0.0f,0.0f);
+        glDisable(GL_DEPTH_TEST);
+        glDisable(GL_LIGHTING);
+        glViewport(0,0,DISPLAY_WIDTH,DISPLAY_HEIGHT);
  
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0.0f,DISPLAY_WIDTH,0.0f,DISPLAY_HEIGHT);
-    glPushMatrix();
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(0.0f,DISPLAY_WIDTH,0.0f,DISPLAY_HEIGHT);
+        glPushMatrix();
  
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    glPushMatrix();
-    }
+        glMatrixMode(GL_MODELVIEW);
+        glLoadIdentity();
+        glPushMatrix();
+    }   
     
-    private void setUpGUI(JPanel sidePanel){
+    /**
+     * Defines the GUI.
+     * @param sidePanel Target for the GUI components.
+     */
+    public void setUpGUI(JPanel sidePanel){
         TextFieldListener listener = new TextFieldListener();
         
-        JButton button = new JButton("START");
+        //Construct buttons
+        JButton startButton = new JButton("START");
         JButton buttonLoad = new JButton("Load Texture");
         
+        //Construct panels
         JPanel initPosPanel = new JPanel();
         JPanel endPosPanel = new JPanel();
         JPanel stepSizePanel = new JPanel();
-        
         JPanel cameraControlPanel = new JPanel();
         
+        //Set Layouts as BoxLayouts
         initPosPanel.setLayout(new BoxLayout(initPosPanel, BoxLayout.LINE_AXIS));
         endPosPanel.setLayout(new BoxLayout(endPosPanel, BoxLayout.LINE_AXIS));
         stepSizePanel.setLayout(new BoxLayout(stepSizePanel, BoxLayout.LINE_AXIS));
         cameraControlPanel.setLayout(new BoxLayout(cameraControlPanel, BoxLayout.LINE_AXIS));
         
+        //Construct labels
         JLabel labelInitPos=new JLabel("Initial position");
         JLabel labelEndPos=new JLabel("End position   ");
         JLabel labelStepSize=new JLabel("Number of Images");
@@ -154,6 +207,7 @@ public class CameraProject {
         JLabel cameraLabelAlpha = new JLabel("alpha");
         JLabel cameraLabelOmega = new JLabel("omega");
         
+        //Construct text fields and add documentListeners with mappings
         JTextField textFieldInitPosx = new JTextField("0",5);
         textFieldInitPosx.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldInitPosx.getDocument(), inputData.initPosX);
@@ -185,11 +239,13 @@ public class CameraProject {
         textFieldOmega.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldOmega.getDocument(), inputData.omega);
         
+        //Fill the stepSizePanel
         stepSizePanel.add(labelStepSize);
         stepSizePanel.add(Box.createHorizontalStrut(10));
         stepSizePanel.add(textFieldStepSize);
         stepSizePanel.setMaximumSize(stepSizePanel.getPreferredSize());
         
+        //Fill the initPosPanel
         initPosPanel.add(labelInitPos);
         initPosPanel.add(Box.createHorizontalStrut(10));
         initPosPanel.add(textFieldInitPosx);
@@ -199,6 +255,7 @@ public class CameraProject {
         initPosPanel.add(textFieldInitPosz);
         initPosPanel.setMaximumSize(initPosPanel.getPreferredSize());
         
+        //Fill the endPosPanel
         endPosPanel.add(labelEndPos);
         endPosPanel.add(Box.createHorizontalStrut(10));
         endPosPanel.add(textFieldEndPosx);
@@ -210,6 +267,7 @@ public class CameraProject {
         
         cameraLabel.setMaximumSize(cameraLabel.getPreferredSize());
         
+        //Fill the cameraControlPanel
         cameraControlPanel.add(cameraLabelAlpha);
         cameraControlPanel.add(textFieldAlpha);
         cameraControlPanel.add(cameraLabelOmega);
@@ -217,9 +275,9 @@ public class CameraProject {
         cameraControlPanel.setMaximumSize(cameraControlPanel.getPreferredSize());
         
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
-        
         sidePanel.setSize(300,DISPLAY_HEIGHT);
 
+        //Fill the sidePanel
         sidePanel.add(Box.createVerticalStrut(50));
         sidePanel.add(stepSizePanel);
         sidePanel.add(Box.createVerticalStrut(10));
@@ -230,13 +288,14 @@ public class CameraProject {
         sidePanel.add(cameraLabel);
         sidePanel.add(Box.createVerticalStrut(10));
         sidePanel.add(cameraControlPanel);
-        
-        sidePanel.add(button);
+        sidePanel.add(startButton);
         sidePanel.add(buttonLoad);
        
+        //Needed for show open file dialogue
         JFileChooser fc = new JFileChooser();
 
-        button.addActionListener(new ActionListener() {
+        //Listener for the start button
+        startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 step=new Vector3f();
@@ -248,6 +307,7 @@ public class CameraProject {
             }
         });
         
+        //Listener for the load button
         buttonLoad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -261,21 +321,37 @@ public class CameraProject {
         }    });
     }
 
-    private Model drawCarrier(float posX, float posY) {
+    /**
+     * Sets a new openGL model to the carrier.
+     * @param posX New X coordinate of the carrier
+     * @param posY New Y coordinate of the carrier
+     * @return Model of the carrier
+     */
+    public Model drawCarrier(float posX, float posY) {
         carrier.setModel(posX,posY);
         return carrier.model;
     }
 
-    private Model drawLand() {
+    /**
+     * Sets a new openGL model to the Land.
+     * @return Model of the Land
+     */
+    public Model drawLand() {
         land.setModel();
         return land.model;       
     }
    
-    private void loop() {
-        carrier = new CarrierS(-0.5f,0.5f,9f);
+    /**
+     * The main render loop.
+     * Periodically renders the scene on the canvas, using the openGL models of carrier, target and land.
+     */
+    public void loop() {
+        //Create new scene objects
+        carrier = new Carrier(-0.5f,0.5f,9f);
         land=new Land(wWidth, wHeight, "img/tahiti.jpg");
         target=new Target();
 
+        //Set up the openGL
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -283,6 +359,7 @@ public class CameraProject {
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity(); //Reset the camera
 
+        //Create new shader and cameras
         Shader shader = new Shader();
         Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f,0,0);
         Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(1f,0f,10f),35f,0,0);
@@ -296,8 +373,7 @@ public class CameraProject {
         
         Vector3f carrierPos=new Vector3f(0,0,9f);
         Vector3f targetPos=new Vector3f(1f,0f,9f);
-        
-        cameraState=State.OVERVIEW;
+
         boolean takePic=false;
         
       while(!Display.isCloseRequested()) {
@@ -364,6 +440,14 @@ public class CameraProject {
       Display.destroy();
     }
     
+    /**
+     * Draws the Canvas scene.
+     * Sets up and renders land, carrier and target.
+     * @param shader Used shader.
+     * @param carrierPos Position of the carrier.
+     * @param camera Camera capturing the scene.
+     * @param targetPos Position of the target.
+     */
     public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera, Vector3f targetPos){
         Model model;
         
@@ -378,28 +462,43 @@ public class CameraProject {
         model.render();
     }
     
-    private Model drawTarget(float posX, float posY){
+    /**
+     * Draw the target.
+     * @param posX New X position of the target.
+     * @param posY New Y position of the target.
+     * @return New model of the target.
+     */
+    public Model drawTarget(float posX, float posY){
         target.setModel(posX,posY);
         return target.model;
     }
     
+    /**
+     * Take a snapshot of the scene, excluding the GUI in the right side panel.
+     * The snapshot is taken from the glbuffer and then stored in the ByteBuffer.
+     */
     public void takePicture(){
         int width=wWidth-300;
         int height=wHeight;
-        
-        String name;
-        
+
         glReadBuffer(GL_FRONT);
         int bpp = 4; // Assuming a 32-bit display with a byte each for red, green, blue, and alpha.
         ByteBuffer buffer = BufferUtils.createByteBuffer(width * height * bpp);
         glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, buffer );
        
-        name="img/screenshots/screenshot" + imgCounter + ".jpg"; 
-        imgCounter++;
-        saveImage(name, width, height, buffer, bpp);
+        saveImage(width, height, buffer, bpp);
     }
     
-    public void saveImage(String name, int width, int height, ByteBuffer buffer,int bpp){
+    /**
+     * Save the image in the buffer into file.
+     * @param width Width of the image.
+     * @param height Height of the image.
+     * @param buffer The image buffer.
+     * @param bpp Color and alpha.
+     */
+    public void saveImage(int width, int height, ByteBuffer buffer,int bpp){      
+    String name="img/screenshots/screenshot" + imgCounter + ".jpg"; 
+    imgCounter++;
     File file = new File(name);
     String format = "jpg";
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -423,6 +522,10 @@ public class CameraProject {
         }
     }
     
+    /**
+     * Main method, calling the run of the application.
+     * @param args In the future can contain config file and so on.
+     */
     public static void main(String[] args) {
         new CameraProject().run();
     }

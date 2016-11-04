@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * This is an implementation of the <a

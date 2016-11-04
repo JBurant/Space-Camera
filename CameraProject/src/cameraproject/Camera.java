@@ -5,8 +5,8 @@
  */
 package cameraproject;
 
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import utils.Matrix4f;
+import utils.Vector3f;
 
 /**
  *

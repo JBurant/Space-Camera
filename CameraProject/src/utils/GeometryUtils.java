@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * Useful geometry methods.

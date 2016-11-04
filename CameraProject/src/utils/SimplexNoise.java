@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * A simplex noise algorithm for 2D, 3D and 4D input.

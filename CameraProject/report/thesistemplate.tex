@@ -1,0 +1,576 @@
+
+%% Uncomment one of these:
+%% the 1st when using pdflatex, which directly typesets your document in
+%% pdf (use jpg or pdf figures), or
+%% the 2nd when producing a ps file (use eps figures, don't use ps figures!).
+\documentclass[english,12pt,a4paper,pdftex,elec,utf8]{aaltothesis}
+%\documentclass[english,12pt,a4paper,dvips]{aaltothesis}
+
+%% To the \documentclass above
+%% specify your school: arts, biz, chem, elec, eng, sci
+%% specify the character encoding scheme used by your editor: utf8, latin1
+
+%% Use one of these if you write in Finnish (see the Finnish template):
+%%
+%\documentclass[finnish,12pt,a4paper,pdftex,elec,utf8]{aaltothesis}
+%\documentclass[finnish,12pt,a4paper,dvips]{aaltothesis}
+
+\usepackage{graphicx}
+
+%% Use this if you write hard core mathematics, these are usually needed
+\usepackage{amsfonts,amssymb,amsbsy}
+
+%% Use the macros in this package to change how the hyperref package below 
+%% typesets its hypertext -- hyperlink colour, font, etc. See the package
+%% documentation. It also defines the \url macro, so use the package when 
+%% not using the hyperref package.
+%%
+%\usepackage{url}
+
+%% Use this if you want to get links and nice output. Works well with pdflatex.
+\usepackage{hyperref}
+\hypersetup{pdfpagemode=UseNone, pdfstartview=FitH,
+  colorlinks=true,urlcolor=red,linkcolor=blue,citecolor=black,
+  pdftitle={Default Title, Modify},pdfauthor={Your Name},
+  pdfkeywords={Modify keywords}}
+
+
+%% All that is printed on paper starts here
+\begin{document}
+
+%% Change the school field to specify your school if the automatically 
+%% set name is wrong
+% \university{aalto-yliopisto}
+% \university{aalto University}
+% \school{Sähkötekniikan korkeakoulu}
+% \school{School of Electrical Engineering}
+
+%% Only for B.Sc. thesis: Choose your degree programme. 
+%\degreeprogram{Electronics and electrical engineering}
+%%
+
+%% ONLY FOR M.Sc. AND LICENTIATE THESIS: Specify your department,
+%% professorship and professorship code. 
+%%
+\department{Department of Radio Science and Technology}
+\professorship{Circuit theory}
+%%
+
+%% Valitse yksi näistä kolmesta
+%%
+%% Choose one of these:
+%\univdegree{BSc}
+\univdegree{MSc}
+%\univdegree{Lic}
+
+%% Your own name (should be self explanatory...)
+\author{Jiri Burant}
+
+%% Your thesis title comes here and again before a possible abstract in
+%% Finnish or Swedish . If the title is very long and latex does an
+%% unsatisfactory job of breaking the lines, you will have to force a
+%% linebreak with the \\ control character. 
+%% Do not hyphenate titles.
+%% 
+\thesistitle{Virtual image generator for asteroid mission navigation}
+
+\place{Espoo}
+
+%% For B.Sc. thesis use the date when you present your thesis. 
+%% 
+%% Kandidaatintyön päivämäärä on sen esityspäivämäärä! 
+%%\date{16.1.2015}
+
+%% B.Sc. or M.Sc. thesis supervisor 
+%% Note the "\" after the comma. This forces the following space to be 
+%% a normal interword space, not the space that starts a new sentence. 
+%% This is done because the fullstop isn't the end of the sentence that
+%% should be followed by a slightly longer space but is to be followed
+%% by a regular space.
+%%
+\supervisor{Prof.\ Esa Kallio} %{Prof.\ Pirjo Professori}
+
+%% B.Sc. or M.Sc. thesis advisors(s). You can give upto two advisors in
+%% this template. Check with your supervisor how many official advisors
+%% you can have.
+%%
+%\advisor{Prof.\ Pirjo Professori}
+%%\advisor{D.Sc.\ (Tech.) Olli Ohjaaja}
+%\advisor{M.Sc.\ Polli Pohjaaja}
+
+%% Aalto logo: syntax:
+%% \uselogo{aaltoRed|aaltoBlue|aaltoYellow|aaltoGray|aaltoGrayScale}{?|!|''}
+%%
+%% Logo language is set to be the same as the document language.
+%% Logon kieli on sama kuin dokumentin kieli
+%%
+\uselogo{aaltoRed}{''}
+
+%% Create the coverpage
+%%
+\makecoverpage
+
+
+%% Note that when writting your master's thesis in English, place
+%% the English abstract first followed by the possible Finnish abstract
+
+%% English abstract.
+%% All the information required in the abstract (your name, thesis title, etc.)
+%% is used as specified above.
+%% Specify keywords
+%%
+%% Kaikki tiivistelmässä tarvittava tieto (nimesi, työnnimi, jne.) käytetään
+%% niin kuin se on yllä määritelty.
+%% Avainsanat
+%%
+\keywords{Image generator, space technology project, openGL, java}
+%% Abstract text
+\begin{abstractpage}[english]
+This project deals with testing of possible setups of a camera mounted on spacecraft. The idea is to simulate simplified movement of this spacecraft above the surface 
+and capture images along the way. Based on those images, it can be decided which camera is best suitable for the given mission and at which angle it should be facing. 
+The generated images can also be used in the next stage to test image analysis tools or image reconstruction software. 
+
+To do so, a simple application has been developped in java programming language, simulating the movement of the spacecraft and generating the pictures. It consists of a big canvas with 
+2D image, above which the spacecraft moves and simple GUI, allowing the user to change basic parameters such as the altitude of the spacecraft, the angle of the mounted camera and do on.
+
+The basic application has been developped and tested, giving satisfying results, but there is a lot of room for future extensions, some of them being described in this report.
+\end{abstractpage}
+
+%% Force a new page so that the possible English abstract starts on a new page
+%%
+%% Pakotetaan uusi sivu varmuuden vuoksi, jotta 
+%% mahdollinen suomenkielinen ja englanninkielinen tiivistelmä
+%% eivät tule vahingossakaan samalle sivulle
+\newpage
+%
+
+
+%% Preface
+%%
+%% Esipuhe 
+\mysection{Preface}
+%\mysection{Esipuhe}
+I want to thank Professor Esa Kallio for the opportunity to work on this project and for his guidance and optimism.\\
+
+\vspace{5cm}
+Helsinky, 6.11.2016
+
+\vspace{5mm}
+{\hfill Jiri Burant \hspace{1cm}}
+
+%% Force new page after preface
+%%
+%% Pakotetaan varmuuden vuoksi esipuheen jälkeinen osa
+%% alkamaan uudelta sivulta
+\newpage
+
+
+%% Table of contents. 
+\thesistableofcontents
+
+
+%% Symbols and abbreviations
+%%\mysection{Symbols and abbreviations}
+%%
+%%\subsection*{Symbols}
+%%
+%%\begin{tabular}{ll}
+%%$\mathbf{B}$  & magnetic flux density  \\
+%%$c$              & speed of light in vacuum $\approx 3\times10^8$ [m/s]\\
+%%$\omega_{\mathrm{D}}$    & Debye frequency \\
+%%$\omega_{\mathrm{latt}}$ & average phonon frequency of lattice \\
+%%$\uparrow$       & electron spin direction up\\
+%%$\downarrow$     & electron spin direction down
+%%\end{tabular}
+%%
+%%\subsection*{Operators}
+%%
+%%\begin{tabular}{ll}
+%%$\nabla \times \mathbf{A}$              & curl of vectorin $\mathbf{A}$\\
+%%$\displaystyle\frac{\mbox{d}}{\mbox{d} t}$ & derivative with respect to 
+%%variable $t$\\[3mm]
+%%$\displaystyle\frac{\partial}{\partial t}$  & partial derivative with respect 
+%%to variable $t$ \\[3mm]
+%%$\sum_i $                       & sum over index $i$\\
+%%$\mathbf{A} \cdot \mathbf{B}$    & dot product of vectors $\mathbf{A}$ and 
+%%$\mathbf{B}$
+%%\end{tabular}
+%%
+%%\subsection*{Abbreviations}
+%%
+%%\begin{tabular}{ll}
+%%AC         & alternating current \\
+%%APLAC      & an object-oriented analog circuit simulator and design tool \\
+%%           & (originally Analysis Program for Linear Active Circuits) \\
+%%BCS        & Bardeen-Cooper-Schrieffer \\ %% dash between the names
+%%DC         & direct current \\
+%%TEM        & transverse eletromagnetic
+%%\end{tabular}
+
+
+%% Tweaks the page numbering to meet the requirement of the thesis format:
+%% Begin the pagenumbering in Arabian numerals (and leave the first page
+%% of the text body empty, see \thispagestyle{empty} below).
+%% Additionally, force the actual text to begin on a new page with the 
+%% \clearpage command.
+%% \clearpage is similar to \newpage, but it also flushes the floats (figures
+%% and tables).
+%% There is no need to change these
+%%
+\cleardoublepage
+\storeinipagenumber
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+
+%% Text body begins. Note that since the text body
+%% is mostly in Finnish the majority of comments are
+%% also in Finnish after this point. There is no point in explaining
+%% Finnish-language specific thesis conventions in English. Someday 
+%% this text will possibly be translated to English.
+%%
+\section{Introduction}
+
+The project of the virtual image generator has been developped as a helper software tool for the ASPECT project, which is part of the ESA's Asteroid Impact Misstion (AIM).
+
+The goal of the AIM is to demonstrate new technologies, mainly in the telecommunications domain. The AIM mission will consist of the main spacecraft carrying the Mascot-2 asteroid lander,  as well as two or more CubeSats. The mission should launch in in October 2020, then travel to the Didymos asteriod pair. The spacecraft would perform high-resolution visual, thermal and radar mapping of the moon and build detailed maps of its surface and interior structure. 
+
+(Official site of the AIM project: $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission}{AIM \: website}$)
+
+The ASPECT project focuses on developping a single three-unit CubeSat equipped with a visible/near-infrared spectrometer to assess the asteroid composition and effects of space weathering and metamorphic shock, as well as post-impact plume observations. 
+
+The Cubesat will be deployed from a 10 km height from the target's surface and orbit it at around 1 to 3 km from the surface. From this distance it will measure the reflectance which will give an understanding of the composition of Didymoon and may provide answers to how this is influenced by space weathering and shock effect.
+
+(Official site of the ASPECT project: $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission/ASPECT}{ASPECT \: website}$)
+
+The navigation of the ASPECT CubeSat is a problematic task, and one of the things that could help it are the camera images. By using appropriate camera and appropriate software, position and speed could be estimated by analyzing the captured images. In order to determine a feasible camera setup and to test the analysis software, before it is deployed to the spacecraft, The Virtual Image Generator, VGI tool has been developped.
+
+It simulates the movement of the spacecraft above surface along specified trajectory (assumed as line), capturing images below. Those images are saved as screenshots, and can later be used for testing image reconstruction, mapping software or speed and position estimation software.
+
+The outcome of this work is a basic software application, ready for future extensions. Some of possible future improvements or applications are discussed in section 4. of this report.
+
+%% Opinn\"aytteess\"a jokainen osa alkaa uudelta sivulta, joten \clearpage
+%%
+%% In a thesis, every section starts a new page, hence \clearpage
+\clearpage
+
+\section{Software design}
+\subsection*{Basic information}
+The software project, as well as the source codes and corresponding libraries can be found on Github ($\href{https://github.com/JBurant/Space-Camera}{Space-Camera \: project}$), from there it can be forked or copied by anyone. 
+The application has been developped in java programming language (JDK 1.8), using NetBeans IDE. Therefore, in order to run it, installed java is required. Apart from basic java libraries, the libraries: $\href{https://github.com/jinput/jinput}{jinput}$, $\href{http://legacy.lwjgl.org/}{lwjgl \: ver.2.9.3}$ and $\href{https://github.com/LWJGL/lwjgl/tree/master/src/java/org/lwjgl/util}{lwjgl \: util}$ have been used. It can be run on any standard operation system (e.g. Windows, LinuxMint, Ubuntu etc.)
+
+The hardware requirements are not strict, any standard computer with installed java and decent graphics card is suitable. During testing, there was an issue with performance, using a notebook with just integrated graphics card, therefore a PC with standard graphics card is recommended. 
+
+The library lwjgl (lightweight java openGL library) enables to use the openGL in the java application, providing interface to the lower lever C++ openGL methods. The usage of this library is straightforward, and is very similar to using normaml openGL in C++. There are also many tutorials on the internet, providing guidance for the development. An important thing to notice is that the application is using lwjgl2. There is already newer version, lwjgl3, whose interface is slightly different and should not be mixed with version 2. The older version has been chosen, because the newer one didn't provide support for any GUI libraries at the time of development of this application.
+
+The Github bundle contains also prepared NetBeans project, which has those libraries already imported. Only thing that must be changed in the project specification is the java path to the native libraries. To do that, right click on libraries in the project tab and select properties, in the newly opened window, in the categories select Run and specify VM Options as :-Djava.library.path="Path-to-lwjgl-library/lwjgl-2.9.3/native/Desired-OS" (\ref{setUpPaths}).
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{SetUpPaths.png}
+\caption{Setting up native path in NetBeans IDE\label{setUpPaths}}
+\end{figure}
+
+In case, that future development will be carried on using another IDE, the libraries must be added, and the path to native libraries must be set. Here is an example how to do that in eclipse:
+$\href{http://wiki.lwjgl.org/wiki/Setting_Up_LWJGL_with_Eclipse.html}{Set \: up \: lwjgl \: in \: Eclipse}$.
+
+After the initial imports and after setting the path, no more setup should be needed. 
+
+\subsection*{Architecture description}
+The application project itself consists of two packages. 
+Package called \textit{utils} consists of parts of the source code from the joml java library. It contains classes and methods for manipulating vectors and matrices, which is useful when rendering the openGL objects. 
+Package \textit{cameraproject} comprises all the application logic. It contains classes concerning the openGL tasks, as texture loading and scene rendering, it also contains the GUI setup and operation logic.
+
+The code itself is thoroughly documented and self-explanatory. Nevertheless, a brief description of the most important classes follows.
+
+The main class is called \textit{CameraProject.java} In this class, the basic GUI initialization is carried out as well as the openGL initialization. Moreover, the main rendering loop is also located there.
+
+For each of the rendered objects, that means the target location, the surface plane and the spacecraft, a dedicated class containing the parameters for the given object, has been created. Those classes are named: \textit{Target.java}, \textit{Land.java} and \textit{Carrier.java}, respetivelly. These three classes have a common parent named \textit{SceneObject.java}, which contains the common parameters, that each scene object must have, as Texture \textit{Texture.java} and Model \textit{Model.java}. Class \textit{Texture.java} contains the loaded texture for the given object and the class \textit{Model.java} contains parameters and methods for rendering of the scene objects.
+
+Class named \textit{Shader.java} is purely openGL based, and creates the shaders for rendering. Those shaders are compiled from files \textit{shaderFrag.frag} (for fragment shader) and \textit{shaderVert.vert} (for vertex shader). The shaders specify, how should each pixel be rendered (color, texture, attenuation and so on.)
+
+Class \textit{Camera.java} contains the parameter of the camera, such as field of view, angles of the camera and so on. From those parameters, a transformation matrix is computed, which serves for rendering of the "observed" objects.
+
+The remaining classes \textit{TextFieldListener.java}, \textit{FloatWrapper.java} and \textit{InputData.java} are helper classes, which facilitate the transport of data from the GUI text fields into the program.
+
+\subsection*{Graphical User Interface}
+
+The GUI has been developped using the java's native Swing library. The GUI is simple and comprises of several labels and text fields for entering the input data and two buttons, one for starting the simulation, one for loading the texture. The layout has been chosen as box layout, because it is straightforward and easy to modify.
+
+In the fig.\ref{GUIExample}, there is an example of how the running apllication looks like. On the left side, there is a surface (land) covered with texture of an island. Over it, a blue and a smaller red rectangles are drawn. They symbolize the spacecraft (carrier) and the target. On the right side, the GUI panel is shown. First field is number of images to be taken during the flight, Underneath is initial position of the spacecraft, the three coordinates specify the x,y,z position in the respective coordinate system. The line end position specified the target location. Last fields are camera parameters, namely two angles of the camera measured as deviation from the y and x axis. Finally, there are buttons for starting the simulation and for loading of the surface texture.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{GUIExample.png}
+\caption{Example run of the application\label{GUIExample}}
+\end{figure}
+
+The coordinate system of the rendered left part of the window is classical 3D Cartesian system, which spans from -4.5 to 4.5 for the x and y coordinates. For the z coordinates, it spans from 0 to 10, while 10 being the coordinate of the surface plane. Therefore the z coordinate is somewhat reversed altitude, as 0 is at the overview, top camera location and 10 is on the surface. 
+
+Once the simulation starts, the camera switches to view of the camera mounted on the spacecraft, with the specified parameters. The images captured by the spacecraft are rendered and consequently saved into a file. A few examples of such images are presented in the section 3.
+
+\clearpage
+
+\section{Results}
+
+T\"ass\"a osassa esitet\"a\"an tulokset ja vastataan tutkielman alussa
+esitettyihin tutkimuskysymyksiin. Tieteellisen kirjoitelman
+arvo mitataan t\"ass\"a osassa esitettyjen tulosten perusteella. 
+
+%% Huomaa seuraavassa kappaleessa lainausmerkkien ulkopuolella piste, 
+%% koska piste ei lopeta lainattua tekstinp\"atk\"a\"a.
+%% Jos lainattu tekstinp\"atk\"a loppuu v\"alimerkkiin, tulee v\"alimerkki
+%% lainausmerkkien sis\"alle: 
+%% "Et tu, Brute?" sanoi Caesar kuollessaan.
+Tutkimustuloksien merkityst\"a on aina syyt\"a arvioida ja tarkastella
+kriittisesti.  Joskus tarkastelu voi olla t\"ass\"a osassa, mutta se
+voidaan my\"os j\"att\"a\"a viimeiseen osaan, jolloin viimeisen osan nimeksi
+tulee >>Tarkastelu>>. Tutkimustulosten merkityst\"a voi arvioida my\"os
+>>Johtop\"a\"at\"okset>>-otsikon alla viimeisess\"a osassa. 
+
+T\"ass\"a osassa on syyt\"a my\"os arvioida tutkimustulosten luotettavuutta.
+Jos tutkimustulosten merkityst\"a arvioidaan >>Tarkastelu>>-osassa,
+voi luotettavuuden arviointi olla my\"os siell\"a. 
+
+\clearpage
+
+\section{Conclusions and future works} 
+
+The aim of this work was to develop an application capable of generating simulated images captured by a camera mounted on a spacecraft during a flight over 2D surface. It can be stated that such application, for simplified setup, was successfully developped and the results are convincing.
+
+Still, there is a lot of room for future development and more improvements. Several suggestions for improvement are listed below.
+
+
+\subsection*{Improved GUI and rendering}
+
+The GUI, as stated earlier, is very simple. One of the possible improvements could be switching to another GUI library, for example TWL or nifty. That would allow more convenient control, for example adding of sliders for setting the position. Also, the rectangles symbolising the carrier and target are very primitive, therefore a better depiction could be introduced.
+
+Besides those cosmetic changes, also coordinates system could be adjusted. Currently, the span of the x and y coordinates is fixly set from -4.5 to 4.5 for the top view, and the altitude is defined as distance from camera in the range from 0 to 10. For the real world applications, it would be a good idea to add the possibility to specify for example the real size of the 2D plane, and based on this values, the coordinates would be recalculated.
+
+\subsection*{Curved surface}
+
+The primary use of this software is presented as part of the asteroids mission program, but in case it finds its use in another projects, for example concerning Earth imaging, than a nice feature could become a slight curvature of the 2D plane, imitating the curvature of the Earth's surface. 
+
+In order to do so, the 2D plane would have to be changed to 3D sphere. This can be done by using the sphere object from the \textit{lwjgl.util.glu} package. Of course, such sphere would have quite big diameter, compared to the altitude of the spacecraft. 
+
+The problem with rendering of the sphere is the texture mapping. In this work, no sphere textures were used so far, but if it is required in the future, it could be useful to express the coordinates in the spherical coordinate system, or to use the UV mapping technique ($\href{https://en.wikipedia.org/wiki/UV_mapping}{UV \: mapping \: on \: wikipedia}$ ). Although, given the error introduced by the curvature is small, it might be possible to just map the texture as if it was 2D plane and accept this error.
+
+\subsection*{Custom 3D surface}
+
+Another extension, similar to the previous one, but more complicated could be loading of arbitrary surface of the 'land'. Such feature could be useful specifically i a project such as the asteroid impact mission, because the surface of the asteriod is very different from 2D plane, and the spacecraft would be close enough to recognize those irregularities.
+
+
+
+\clearpage
+%% L\"ahdeluettelo
+%%
+%% \phantomsection varmistaa, ett\"a hyperref-paketti latoo hypertekstilinkit
+%% oikein.
+%%
+%% The \phantomsection command is nessesary for hyperref to jump to the 
+%% correct page, in other words it puts a hyper marker on the page.
+
+\phantomsection
+\addcontentsline{toc}{section}{\refname}
+%\addcontentsline{toc}{section}{References}
+\begin{thebibliography}{99}
+
+%% Alla pilkun j\"alkeen on pakotettu oikea v\"ali \<v\"alily\"onti>-merkeill\"a.
+\bibitem{Kauranen} Kauranen,\ I., Mustakallio,\ M. ja Palmgren,\ V.
+  \textit{Tutkimusraportin kirjoittamisen opas opinn\"aytety\"on
+    tekij\"oille.}  Espoo, Teknillinen korkeakoulu, 2006.
+
+\bibitem{Itkonen} Itkonen,\ M. \textit{Typografian k\"asikirja.} 3.\
+  painos.  Helsinki, RPS-yhti\"ot, 2007.
+
+\bibitem{Koblitz} Koblitz,\ N. \textit{A Course in Number Theory and
+    Cryptography. Graduate Texts in Mathematics 114.}  2.\ painos. New
+  York, Springer, 1994.
+
+%% Kun on useampi nimikirjain, jokaisen nimikirjaimen v\"aliin
+%% kuuluu v\"alily\"onti. Oikea v\"alin m\"a\"ar\"a on saatu \<v\"alily\"onnill\"a>
+\bibitem{bcs} Bardeen,\ J., Cooper,\ L.\ N. ja Schrieffer,\ J.\ R.
+  Theory of Superconductivity. \textit{Physical Review,} 1957, vol.\
+  108, nro~5, s.\ 1175--1204.
+
+\bibitem{Deschamps} Deschamps,\ G.\ A. Electromagnetics and
+  Differential Forms. \textit{Proceedings of the IEEE,} 1981, vol.\
+  69, nro~6, s.\ 676--696.
+
+%% Alla esimerkki englanninkielisen tavuttamisen pakottamisesta.
+%% Oletusarvoisesti k\"aytet\"a\"an suomalaista tavutusta, mutta viitteiss\"a
+%% esiintyy usein muunkielisi\"a lauseita, jotka tulevat siten tavutetuksi
+%% suomen kielen s\"a\"ant\"ojen mukaan. T\"am\"an voi korjata \foreignlanguage-
+%% komennolla, jonka ensimm\"ainen parametri on vieraan kielen nimi ja toinen 
+%% on vieraalla kielell\"a tavutettava teksti. 
+\bibitem{Sihvola} Sihvola,\ A.\ et al.
+  \foreignlanguage{english}{Interpretation of measurements of helix 
+    and bihelix superchiral structures.}
+  Teoksessa: Jacob,\ A.\ F. ja
+  Reinert,\ J. (toim.) \textit{Bianisotropics '98 7th International
+    Conference on Complex Media.}  Braunschweig, 3.--6.6.1998.
+  Braunscweig, Technische Universit\"at Braunschweig, 1998, s.\
+  317--320.
+
+%% Alla on suomalainen yhdistelm\"asukunimi. Sen nimien v\"aliss\"a 
+%% k\"aytet\"a\"an yhdysmerkki\"a l. tavuviivaa, kirjoitetaan -.
+\bibitem{Lindblom} Lindblom-Yl\"anne,\ S. ja Wager,\ M.  Tieteellisten
+  opinn\"aytet\"oiden ohjaaminen. Teoksessa: Lindblom-Yl\"anne,\ S. ja
+  Nevgi,\ A. (toim.) \textit{Yliopisto- ja korkeakouluopettajan
+    k\"asikirja.}  Helsinki, WSOY, 2004, s.\ 314--325.
+ 
+\bibitem{Miinusmaa} Miinusmaa,\ H. Neliskulmaisen rei\"an poraamisesta
+  kolmikulmaisella poralla. Diplomity\"o, Teknillinen korkeakoulu,
+  konetekniikan osasto, Espoo, 1977.
+
+%% T\"ass\"a taas pakotettu englanninkielinen tavutus. 
+%% Pedanttinen kirjoittaja pakottaa tietysti jokaiseen englanninkieliseen
+%% lauseeseen englannin tavutuksen, mutta t\"ass\"a esityksess\"a ei n\"ain ole
+%% tehty selvyyden ja l\"ahdekoodin luettavuuden takia. 
+\bibitem{Loh} Loh,\ N.\ C. High-Resolution Micromachined
+  Interferometric Accelerometer. Master's Thesis, Massachusetts
+  Institute of Technology, Cambridge,
+  \foreignlanguage{english}{Massachusetts,} 1992.
+
+\bibitem{Lonnqvist} L\"onnqvist,\ A.
+  \foreignlanguage{english}{Applications of hologram-based compact
+    range: antenna radiation pattern, radar cross section, and
+    absorber reflectivity measurements.}
+  V\"ait\"oskirja, Teknillinen korkeakoulu, s\"ahk\"o- ja tietoliikennetekniikan
+  osasto, 2006.
+
+\bibitem{sfs} SFS 5342. Kirjallisuusviitteiden laatiminen. 2.\ painos.
+  Helsinki, Suomen standardisoimisliitto, 2004. 20~s.
+
+\bibitem{haastattelu} Palmgren,\ V. Suunnittelija. Teknillinen
+  korkeakoulu, kirjasto. Otaniementie 9, 02150 Espoo. Haastattelu
+  15.1.2007.
+
+\bibitem{Ribeiro} Ribeiro,\ C.\ B., Ollila,\ E. ja Koivunen,\ V.
+  \foreignlanguage{english}{Stochastic Maximum-Likelihood Method for
+    MIMO Propagation Parameter Estimation.}
+ \textit{IEEE Transactions
+    on Signal Processing,} verkkolehti, vol.\ 55, nro~1, s.\ 46--55.
+  Viitattu 19.1.2007. Lehti ilmestyy my\"os painettuna. DOI:
+  10.1109/TSP.2006.882057.
+
+\bibitem{Stieber} Stieber,\ T. GnuPG Hacks. \textit{Linux Journal,}
+  verkkolehti, 2006, maaliskuu, nro~143. Viitattu 19.1.2007. Lehti
+  ilmestyy my\"os painettuna. Saatavissa:
+  \url{http://www.linuxjournal.com/article/8732.}
+
+\bibitem{kone} Pohjois-Koivisto,\ T. Voiko kone tulevaisuudessa arvata
+  tahtosi?  \textit{Apropos,} verkkolehti, helmikuu, nro~1, 2005.
+  Viitattu 19.1.2007.  Saatavissa:
+  \url{http://www.apropos.fi/1-2005/prima.php.}
+
+\bibitem{Adida} Adida,\ B.  Advances in Cryptographic Voting Systems.
+  Verkkodokumentti. Ph.D.\ Thesis, Massachusetts Institute of
+  Technology, Cambridge, 
+  \foreignlanguage{english}{Massachusetts,}
+  2006. Viitattu 19.1.2007.  Saatavissa:
+  \url{http://crypto.csail.mit.edu/~cis/theses/adida-phd.pdf.}
+
+\bibitem{viittaaminen} Kilpel\"ainen,\ P. WWW-l\"ahteisiin viittaaminen
+  tutkielmatekstiss\"a. Verkkodokumentti. P\"aivitetty 26.11.2001.
+  Viitattu 19.1.2007. Saatavissa:
+  \url{http://www.cs.uku.fi/~kilpelai/wwwlahteet.html.}
+
+\end{thebibliography}
+
+%% Appendices
+%% Liitteet
+\clearpage
+
+\thesisappendix
+
+\section{Esimerkki liitteest\"a\label{LiiteA}}
+
+Liitteet eiv\"at ole opinn\"aytteen kannalta v\"altt\"am\"att\"omi\"a ja 
+opinn\"aytteen tekij\"an on 
+kirjoittamaan ryhtyess\"a\"an hyv\"a ajatella p\"arj\"a\"av\"ans\"a ilman liitteit\"a.
+Kokemattomat kirjoittajat, jotka ovat huolissaan
+tekstiosan pituudesta, paisuttavat turhan 
+helposti liitteit\"a pit\"a\"akseen tekstiosan pituuden annetuissa rajoissa.
+T\"all\"a tavalla ei synny hyv\"a\"a opinn\"aytett\"a.   
+
+Liite on itsen\"ainen kokonaisuus, vaikka se t\"aydent\"a\"akin tekstiosaa.
+Liite ei siten ole pelkk\"a listaus, kuva tai taulukko, vaan 
+liitteess\"a selitet\"a\"an aina sis\"all\"on laatu ja tarkoitus. 
+
+Liitteeseen voi laittaa esimerkiksi listauksia. Alla on 
+listausesimerkki t\"am\"an liitteen luomisesta. 
+
+%% Verbatim-ymp\"arist\"o ei muotoile tai tavuta teksti\"a. Fontti on monospace.
+%% Verbatim-ymp\"arist\"on sis\"all\"a annettuja komentoja ei LaTeX k\"asittele. 
+%% Vasta \end{verbatim}-komennon j\"alkeen jatketaan k\"asittely\"a.
+\begin{verbatim}
+	\clearpage
+	\appendix
+	\addcontentsline{toc}{section}{Liite A}
+	\section*{Liite A}
+	...
+	\thispagestyle{empty}
+	...
+	teksti\"a
+	...
+	\clearpage
+\end{verbatim}
+
+Kaavojen numerointi muodostaa liitteiss\"a oman kokonaisuutensa:
+\begin{eqnarray}
+d \wedge A  &=& F, \label{liitekaava1}\\
+d \wedge F  &=& 0. \label{liitekaava2}
+\end{eqnarray}
+
+
+\clearpage
+\section{Toinen esimerkki liitteest\"a\label{LiiteB}}
+
+%% Liitteiden kaavat, taulukot ja kuvat numeroidaan omana kokonaisuutenaan
+%%
+%% Equations, tables and figures have their own numbering in Appendices
+%\renewcommand{\theequation}{B\arabic{equation}}
+%\setcounter{equation}{0}  
+%\renewcommand{\thefigure}{B\arabic{figure}}
+%\setcounter{figure}{0}
+%\renewcommand{\thetable}{B\arabic{table}}
+%\setcounter{table}{0}
+
+Liitteiss\"a voi my\"os olla kuvia, jotka
+eiv\"at sovi leip\"atekstin joukkoon:
+%% Ymp\"arist\"on figure parametrit htb pakottavat
+%% kuvan t\"ah\"an, eik\"a LaTeX yrit\"a siirrell\"a niit\"a
+%% hyv\"aksi katsomaansa paikkaan. 
+%% Ymp\"arist\"o\"a center voi k\"aytt\"a\"a \centering-
+%% komennon sijaan
+%%
+%% Example of a figure, note the use of htb parameters which force
+%% the figure to be inserted here
+%%\begin{figure}[htb]
+%%\begin{center}
+%%\includegraphics[height=8cm]{kuva2}
+%%\end{center}
+%%\caption{Kuvateksti, jossa on liitteen numerointi}
+%%\label{liitekuva}
+%%\end{figure}
+%%
+Liitteiden taulukoiden numerointi on kuvien ja kaavojen kaltainen:
+\begin{table}[htb]
+\caption{Taulukon kuvateksti.}
+\label{liitetaulukko}
+\begin{center}
+\fbox{
+\begin{tabular}{lp{0.5\linewidth}}
+9.00--9.55  & K\"aytett\"avyystestauksen tiedotustilaisuus (osanottajat
+ovat saaneet s\"ahk\"opostitse valmistautumisteht\"av\"at, joten tiedotustilaisuus
+voidaan pit\"a\"a lyhyen\"a).\\
+9.55--10.00 & Testausalueelle siirtyminen
+\end{tabular}}
+\end{center}
+\end{table}
+Kaavojen numerointi muodostaa liitteiss\"a oman kokonaisuutensa:
+\begin{eqnarray}
+T_{ik} &=& -p g_{ik} + w u_i u_k + \tau_{ik},  \label{liitekaava3} \\
+n_i    &=& n u_i + v_i.                      \label{liitekaava4}
+\end{eqnarray}
+
+\end{document}

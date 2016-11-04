@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * Contains various interpolation functions.

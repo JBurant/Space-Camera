@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 import java.io.IOException;
 import java.io.ObjectInput;

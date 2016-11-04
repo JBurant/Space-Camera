@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * Contains intersection and distance tests for some 2D and 3D geometric primitives.

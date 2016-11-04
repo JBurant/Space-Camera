@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * Computes the weighted average of multiple rotations represented as {@link Quaternionf} instances.

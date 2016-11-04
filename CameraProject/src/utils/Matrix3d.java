@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 /**
  * Contains fast approximations of some {@link java.lang.Math} operations.

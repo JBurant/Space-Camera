@@ -20,7 +20,7 @@
  THE SOFTWARE.
 
  */
-package org.joml;
+package utils;
 
 import java.util.ArrayList;
 import java.util.BitSet;
