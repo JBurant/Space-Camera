@@ -10,14 +10,18 @@ import static org.lwjgl.opengl.GL11.glDisable;
 import static org.lwjgl.opengl.GL11.glEnable;
 
 /**
- *
- * @author Jirka3
+ * Parent class for the rendered objects.
+ * @author Jiri Burant
  */
 public class SceneObject {
     public Model model;
     public Texture tex;
     protected String textureName;
     
+    /**
+     * Loads the texture.
+     * @return Loaded texture.
+     */
     public final Texture loadTexture(){    
         glEnable(GL_TEXTURE_2D);
         tex = new Texture(this.textureName);

@@ -6,16 +6,15 @@
 package cameraproject;
 
 /**
- *
- * @author Jirka3
+ * 2D Model of the surface.
+ * @author Jiri Burant
  */
 public class Land extends SceneObject{
     private final int  MAX_WIDTH=800;
     private final int  MAX_HEIGHT=500;
     
-    private int wWidth;
-    private int wHeight;
-    
+    private final int wWidth;
+    private final int wHeight;
     
     public Land(int wWidth, int wHeight,String textureName){
         this.wWidth=wWidth;
@@ -24,6 +23,10 @@ public class Land extends SceneObject{
         this.tex=this.loadTexture();
     }
     
+    /**
+     * Set new openGL model.
+     * Firstly, it checks whether the texture fits the area, if not it scales it down appropriately.
+     */
     public void setModel(){
         tex.bind(0);
         float landWidth;
@@ -55,10 +58,9 @@ public class Land extends SceneObject{
             landHeight=10.5f/ratio;
         }
         
-        landWidth=10;
-        landHeight=10;
         float posZ=10f;
         
+        //Build and set the model
         float[] vertices = new float[]{
             landWidth,-landHeight,posZ,    //BOTTOM RIGHT
             landWidth,landHeight,posZ,  //TOP RIGHT

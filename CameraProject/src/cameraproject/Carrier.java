@@ -6,19 +6,41 @@
 package cameraproject;
 
 /**
- *
- * @author jiri
+ * Basic properties of the spacecraft.
+ * @author Jiri Burant
  */
 public class Carrier extends SceneObject{
+    /**
+     * Size of the spacecraft.
+     */
     float size;
-    
+    /**
+     * X axis position of the center of the spacecraft.
+     */
     float coorX;
+    /**
+    * Y axis position of the center of the spacecraft.
+    */
     float coorY;
+    /**
+    * Z axis position of the center of the spacecraft.
+    */
     float coorZ;
-
+    /**
+     * X axis position of the camera mounted on the spacecraft.
+     */
     float cameraX;
+    /**
+     * Y axis position of the camera mounted on the spacecraft.
+     */
     float cameraY;
+    /**
+     * The x axis angle of the camera.
+     */
     float cameraAlpha;
+    /**
+     * The y axis angle of the camera.
+     */
     float cameraBeta;
 
     public Carrier(float coorX, float coorY, float coorZ) {
@@ -29,6 +51,7 @@ public class Carrier extends SceneObject{
         this.cameraY = 0;
         this.cameraAlpha = 0;
         this.cameraAlpha = 0;
+        this.size=0.5f;
         
         this.textureName="img/carrier.png";
         this.loadTexture();
@@ -46,10 +69,14 @@ public class Carrier extends SceneObject{
         this.size=0.5f;
     }
     
+    /**
+     * Sets new openGL model.
+     * @param posX X axis coordinate.
+     * @param posY Y axis coordinate.
+     * @param posZ Z axis coordinate.
+     */
     public void setModel(float posX, float posY, float posZ){
         this.tex.bind(0);
-        
-        float size = 0.5f;
         
         float[] vertices = new float[]{
             posX + size, posY + size, posZ,  //TOP RIGHT

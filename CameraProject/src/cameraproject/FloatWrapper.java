@@ -6,7 +6,7 @@
 package cameraproject;
 
 /**
- *
+ * Helper class for passing the float value by reference.
  * @author Jirka3
  */
 public class FloatWrapper {

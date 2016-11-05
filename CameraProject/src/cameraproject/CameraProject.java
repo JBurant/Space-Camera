@@ -7,7 +7,6 @@ package cameraproject;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static org.lwjgl.opengl.GL11.*;
@@ -263,13 +262,13 @@ public class CameraProject {
         textFieldStepSize.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldStepSize.getDocument(), inputData.noImages);
         
-        JTextField textFieldAlpha = new JTextField("0",3);
+        JTextField textFieldAlpha = new JTextField("0",5);
         textFieldAlpha.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldAlpha.getDocument(), inputData.alpha);
-        JTextField textFieldOmega = new JTextField("0",3);
+        JTextField textFieldOmega = new JTextField("0",5);
         textFieldOmega.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldOmega.getDocument(), inputData.omega);
-        JTextField textFieldFov = new JTextField("0",3);
+        JTextField textFieldFov = new JTextField("0",5);
         textFieldFov.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldFov.getDocument(), inputData.fov);
         
@@ -404,12 +403,9 @@ public class CameraProject {
             }
             
             if(doMove){
+                setCameraData(camera2);
                 moving=true;
                 doMove=false;
-                
-                camera2.alpha=inputData.alpha.getValue();
-                camera2.omega=inputData.omega.getValue();
-                camera2.fov=inputData.fov.getValue();
             }
             
             if(moving){
@@ -422,32 +418,23 @@ public class CameraProject {
                 renderTargetCarrier=true;
             }
             
-            targetPos.x=inputData.endPosX.getValue();
-            targetPos.y=inputData.endPosY.getValue();
-            targetPos.z=inputData.endPosZ.getValue();
             
+            targetPos = new Vector3f(inputData.endPosX.getValue(),inputData.endPosY.getValue(),inputData.endPosZ.getValue());
             camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
-            glViewport(0,0,mainWidth,mainHeight);
-            drawMainView(shader,carrierPos,currentCamera,targetPos,renderTargetCarrier);
             
+            glViewport(0,0,mainWidth,mainHeight);
+            
+            drawMainView(shader,carrierPos,currentCamera,targetPos,renderTargetCarrier);
             glUseProgram(0);
                         
             Display.update();
             Display.sync(60);
             
             if(takePic){
-                if(imgCounter<inputData.noImages.getValue()){
-                    System.out.println("taken");
-                    System.out.println(carrierPos);
-                    takePicture();
-                }else{
-                    moving=false;
-                    imgCounter=0;
-                }
+                checkNoImages(carrierPos);
+                
             }else{
-                carrierPos.x=inputData.initPosX.getValue();
-                carrierPos.y=inputData.initPosY.getValue();
-                carrierPos.z=inputData.initPosZ.getValue();
+                carrierPos=new Vector3f(inputData.initPosX.getValue(),inputData.initPosY.getValue(),inputData.initPosZ.getValue());
             }
       }
       takePic=moving;
@@ -455,6 +442,31 @@ public class CameraProject {
       
       System.out.println("destroy");
       Display.destroy();
+    }
+    
+    /**
+     * Sets camera parameters from inputData
+     * @param camera The spacecraft camera.
+     */
+    public void setCameraData(Camera camera){
+        camera.alpha=inputData.alpha.getValue();
+        camera.omega=inputData.omega.getValue();
+        camera.fov=inputData.fov.getValue();
+    }
+    
+    /**
+     * Checks if enough images have been taken, if so stops moving, otherwise takes another one.
+     * @param carrierPos Position of the carrier.
+     */
+    public void checkNoImages(Vector3f carrierPos){
+        if(imgCounter<inputData.noImages.getValue()){
+                    System.out.println("taken");
+                    System.out.println(carrierPos);
+                    takePicture();
+                }else{
+                    moving=false;
+                    imgCounter=0;
+                }
     }
     
     /**

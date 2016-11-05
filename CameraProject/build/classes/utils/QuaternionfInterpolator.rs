@@ -1,2 +1,0 @@
-org.joml.QuaternionfInterpolator
-org.joml.QuaternionfInterpolator$SvdDecomposition3f

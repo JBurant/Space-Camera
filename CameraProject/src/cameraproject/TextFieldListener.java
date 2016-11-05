@@ -6,19 +6,20 @@
 package cameraproject;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 
 /**
- *
- * @author Jirka3
+ * Listener for the input JTextFields.
+ * @author Jiri Burant
  */
 public class TextFieldListener implements DocumentListener{
+    /**
+     * Collection of documents it listens to, associated with inner float variables.
+     */
     private HashMap<Document, FloatWrapper> documentMapping;
     
     public TextFieldListener(){
@@ -40,6 +41,10 @@ public class TextFieldListener implements DocumentListener{
         getTheValue(e);
     }
     
+    /**
+     * If one of the documents changes, determine which one and set according variable.
+     * @param e Event raised by the change of one of the input JTextFields.
+     */
     private void getTheValue(DocumentEvent e){
         String text="";
         float val;
@@ -60,6 +65,11 @@ public class TextFieldListener implements DocumentListener{
         System.out.println(text);
     }
     
+    /**
+     * Add new key-value pair.
+     * @param key Source Document.
+     * @param value Target inner variable.
+     */
     public void addMapping(Document key, FloatWrapper value){
         documentMapping.put(key, value);
     }

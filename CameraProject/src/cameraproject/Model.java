@@ -12,16 +12,22 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 /**
- *
- * @author Jirka3
+ * OpenGL model of a SceneObject.
+ * @author Jiri Burant
  */
 public class Model {
-    private int draw_count;
-    private int v_id;
+    private final int draw_count;
+    private final int v_id;
     private int c_id;
     private int t_id;
     private int i_id;
     
+    /**
+     * Build new textured Model.
+     * @param vertices
+     * @param tex_coords
+     * @param indices 
+     */
     public Model(float[] vertices, float[]tex_coords, int[] indices){
         draw_count = indices.length;
         
@@ -43,6 +49,10 @@ public class Model {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
+    /**
+     * Build new non-textured model.
+     * @param vertices 
+     */
     public Model(float[] vertices){
         draw_count = vertices.length/3;
 
@@ -53,6 +63,9 @@ public class Model {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
     
+    /**
+     * Render non-textured model.
+     */
     public void renderNoTex(){
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -68,6 +81,9 @@ public class Model {
         glDisableVertexAttribArray(1);
          }
     
+    /**
+     * Render textured model.
+     */
     public void render(){
         glEnableVertexAttribArray(0);
         glEnableVertexAttribArray(1);
@@ -87,6 +103,11 @@ public class Model {
         glDisableVertexAttribArray(1);
     }
     
+    /**
+     * Creater new FloatBuffer with specified data.
+     * @param data Data to include to buffer.
+     * @return Buffer of the data.
+     */
     private FloatBuffer createBuffer (float[] data){
         FloatBuffer buffer = BufferUtils.createFloatBuffer(data.length);
         buffer.put(data);

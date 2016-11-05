@@ -27,14 +27,18 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 /**
- *
- * @author Jirka3
+ * OpenGL texture of a Scene object.
+ * @author Jiri Burant
  */
 public class Texture {
     private int id;
     public int width;
     public int height;
-    
+
+    /**
+     * Build new OpenGL texture from given filename.
+     * @param filename Texture's source file.
+     */
 public Texture(String filename){
     BufferedImage bi;
     try{
@@ -67,10 +71,13 @@ public Texture(String filename){
 
             
     }catch(IOException e){
-        e.printStackTrace();
     }
 }
     
+/**
+ * Bind the texture to openGL.
+ * @param sampler Sampler of the texture, 0 is used.
+ */
     public void bind(int sampler){
         glEnable(GL_TEXTURE_2D);
         

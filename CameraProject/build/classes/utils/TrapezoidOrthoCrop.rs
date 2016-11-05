@@ -1,2 +1,0 @@
-org.joml.TrapezoidOrthoCrop$Vector2fComparator
-org.joml.TrapezoidOrthoCrop

@@ -6,8 +6,8 @@
 package cameraproject;
 
 /**
- *
- * @author Jirka3
+ * Marks the target position of the spacecraft.
+ * @author Jiri Burant
  */
 public class Target extends SceneObject{
     public Target(){
@@ -15,6 +15,12 @@ public class Target extends SceneObject{
         this.tex=this.loadTexture();
     }
     
+    /**
+     * Builds and sets a new openGL model.
+     * @param posX X axis coordinate.
+     * @param posY Y axis coordinate.
+     * @param posZ Z axis coordinate.
+     */
     public void setModel(float posX, float posY, float posZ){
         this.tex.bind(0);
         

@@ -262,7 +262,7 @@ The main class is called \textit{CameraProject.java} In this class, the basic GU
 
 For each of the rendered objects, that means the target location, the surface plane and the spacecraft, a dedicated class containing the parameters for the given object, has been created. Those classes are named: \textit{Target.java}, \textit{Land.java} and \textit{Carrier.java}, respetivelly. These three classes have a common parent named \textit{SceneObject.java}, which contains the common parameters, that each scene object must have, as Texture \textit{Texture.java} and Model \textit{Model.java}. Class \textit{Texture.java} contains the loaded texture for the given object and the class \textit{Model.java} contains parameters and methods for rendering of the scene objects.
 
-Class named \textit{Shader.java} is purely openGL based, and creates the shaders for rendering. Those shaders are compiled from files \textit{shaderFrag.frag} (for fragment shader) and \textit{shaderVert.vert} (for vertex shader). The shaders specify, how should each pixel be rendered (color, texture, attenuation and so on.)
+Class named \textit{Shader.java} is purely openGL based, and creates the shaders for rendering. The shaders specify, how should each pixel be rendered (color, texture, attenuation and so on.)
 
 Class \textit{Camera.java} contains the parameter of the camera, such as field of view, angles of the camera and so on. From those parameters, a transformation matrix is computed, which serves for rendering of the "observed" objects.
 
@@ -287,7 +287,68 @@ Once the simulation starts, the camera switches to view of the camera mounted on
 
 \section{Results}
 
-TODO: testing 
+The system has been tested on a laptop with following specifications. Operating system: LinuxMint 17, Processor: Intel Pentium B970 2.3GHz, RAM: 4GB, integrated graphics card.
+
+The application was tested for several different setups of camera parameters, different positions of the spacecraft and number of steps. 
+
+Following figures depict two example cases, their setup and the resulting screenshots, for both tests 4 steps were chosen.
+
+In the first example case the spacecraft flew from coordinates [-3,-3,9] to coordinates [3,3,9]
+
+In the second example case the spacecraft flew from coordinates [-3,3,7] to coordinates [2,-1,9], because it started on z coordinate 7, it was outside of the camera scope, therefore there it is not visible in the setup figure.
+Also, the omega angle has been chosen as -0.01rad, therefore the image is slightly tilted.
+
+The results of those tests were quite convincing, and they suggest, that the image generation works correctly.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{screenTest1.png}
+\caption{The setup of the first test\label{screenTest1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot00.jpg}
+\caption{First step of the first test\label{screenshot0Test1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot10.jpg}
+\caption{Second step of the first test\label{screenshot1Test1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot20.jpg}
+\caption{Third step of the first test\label{screenshot2Test1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot30.jpg}
+\caption{Fourth step of the first test\label{screenshot3Test1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{screenTest2.png}
+\caption{The setup of the second test\label{screenTest2}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot0.jpg}
+\caption{First step of the second test\label{screenshot0Test2}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot1.jpg}
+\caption{Second step of the second test\label{screenshot1Test2}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot2.jpg}
+\caption{Third step of the second test\label{screenshot2Test2}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=5cm]{screenshot3.jpg}
+\caption{Fourth step of the second test\label{screenshot3Test2}}
+\end{figure}
 
 \clearpage
 
@@ -320,7 +381,15 @@ The first thing such approach needs is a 3D model. The model should be presented
 
 \subsection*{Light intensity and Attenuation}
 
-\subsection*{curved trajectory}
+\subsection*{Curved trajectory}
+
+In this work, only line trajectory of the spacecraft has been assumed. It is sufficient for most of the cases, but a possible improvement could be a curved trajectory, especially in connection with the curved or custom 3D surface. In that case, several other input parameters should be added. Assuming that the shape of the trajectory would be circular, which is the most probable case, such curvature could be specified by adding the coordinates of the center of this hypothetic circle. Using this point and the initial and target point, the trajectory can be calculated, example on the figure \ref{CurvedTrajectory}.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{CurvedTrajectory.png}
+\caption{Curved trajectory schema\label{CurvedTrajectory}}
+\end{figure}
+
 
 \subsection*{Configuration file}
 
@@ -410,6 +479,11 @@ $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_I
     $\href{https://www.youtube.com/watch?v=izKAvSV3qk0}{https://www.youtube.com/watch?v=izKAvSV3qk0}$,
   5th November, 2016.
 
+\bibitem{JarSplice} JarSplice utility homepage:
+
+    $\href{http://ninjacave.com/jarsplice}{http://ninjacave.com/jarsplice}$,
+  5th November, 2016.
+
 \end{thebibliography}
 
 %% Appendices
@@ -421,7 +495,7 @@ $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_I
 \section{Installation and usage\label{LiiteA}}
 
 The software project, as well as the source codes and corresponding libraries can be found on Github \cite{gitHub}, from there it can be forked or copied by anyone. 
-As stated in section 2, the application has been developped in java programming language (JDK 1.8), using NetBeans IDE. Therefore, in order to run it, installed java is required. Apart from basic java libraries, the libraries: \textit{jinput} \cite{jinput}, \textit{lwjgl} \cite{lwjgl} and \textit{lwjgl util} \cite{lwjglUtil} have been used. It can be run on any standard operation system (e.g. Windows, LinuxMint, Ubuntu etc.)
+As stated in section 2, the application has been developped in java programming language (JDK 1.8), using NetBeans IDE. Therefore, in order to run it, installed java is required. Apart from basic java libraries, the libraries: \textit{jinput} \cite{jinput}, \textit{lwjgl} \cite{lwjgl} and \textit{lwjgl util} \cite{lwjglUtil} have been used. It can be run on any standard operation system (e.g. Windows, LinuxMint, Ubuntu etc.) Although, the native file is specific, therefore, it needs to be build separately for different operating systems, with different value of the native path.
 
 The hardware requirements are not strict, any standard computer with installed java and decent graphics card is suitable. During testing, there was an issue with performance, using a notebook with just integrated graphics card, therefore a PC with standard graphics card is recommended. 
 
@@ -440,5 +514,7 @@ After the initial imports and after setting the path, no more setup should be ne
 
 The application can then be compiled using the IDE and consequently run.
 The application can also be run as already compiled .jar file. In this case it is sufficient to just double click on the icon. In this case only java needs to be installed. As for the output of the program, the images, they are automatically stored to a folder with name **, therefore such folder must exist beforehand.
+
+In order to Deploy a new jar file, a so called fat jar must be created. This can be done for example using the  JarSplice tool \cite{JarSplice}, which packs the project libraries as well as corresponding native libraries into one executable jar folder.
 
 \end{document}

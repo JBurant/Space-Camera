@@ -6,24 +6,26 @@
  */
 package cameraproject;
 
-/**
- *
- * @author Jirka3
- */
-
 import java.nio.FloatBuffer;
 import utils.Matrix4f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import static org.lwjgl.opengl.GL20.*;
 
-public class Shader {
-    private int program;
-    private int vs;
-    private int fs;
-    private FloatBuffer buffer;
+/**
+ * Creates new frag and vert shader program.
+ * @author Jiri Burant
+ */
 
+public class Shader {
+    private final int program;
+    private final int vs;
+    private final int fs;
+    private final FloatBuffer buffer;
+
+    /**
+     * Creates and links the shader program from specified string description of the shaders.
+     */
 public Shader (){
     buffer = BufferUtils.createFloatBuffer(16);
     
@@ -85,6 +87,11 @@ public Shader (){
     glValidateProgram(program);
 }
 
+/**
+ * Set uniform Matrix4f variable of the shader program.
+ * @param name Name of the variable.
+ * @param value Value to be used.
+ */
 public void setUniform(String name, Matrix4f value){
     int location = glGetUniformLocation(program,name);
     value.get(buffer);
@@ -93,6 +100,11 @@ public void setUniform(String name, Matrix4f value){
     }
 }
 
+/**
+ * Set uniform int variable of the shader program.
+ * @param name Name of the variable.
+ * @param value Value to be used.
+ */
 public void setUniform(String name, int value){
     int location = glGetUniformLocation(program,name);
 
@@ -101,7 +113,10 @@ public void setUniform(String name, int value){
     }
 }
 
-    public void bind(){
+/**
+ * Binds the shader program.
+ */
+public void bind(){
         glUseProgram(program);
     }
 }
