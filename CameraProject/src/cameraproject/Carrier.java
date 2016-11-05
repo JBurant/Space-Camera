@@ -46,13 +46,11 @@ public class Carrier extends SceneObject{
         this.size=0.5f;
     }
     
-    public void setModel(float posX, float posY){
+    public void setModel(float posX, float posY, float posZ){
         this.tex.bind(0);
         
         float size = 0.5f;
         
-        float posZ=9f;
-
         float[] vertices = new float[]{
             posX + size, posY + size, posZ,  //TOP RIGHT
             posX-size, posY + size, posZ,    //TOP LEFT

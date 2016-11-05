@@ -10,7 +10,7 @@ import utils.Vector3f;
 
 /**
  *
- * @author Jirka3
+ * @author Jiri Burant
  */
 public class Camera {
     public Vector3f position;

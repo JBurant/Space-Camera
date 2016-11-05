@@ -53,14 +53,14 @@
 %% professorship and professorship code. 
 %%
 \department{Department of Radio Science and Technology}
-\professorship{Circuit theory}
+%\professorship{Circuit theory}
 %%
 
 %% Valitse yksi näistä kolmesta
 %%
 %% Choose one of these:
 %\univdegree{BSc}
-\univdegree{MSc}
+%\univdegree{MSc}
 %\univdegree{Lic}
 
 %% Your own name (should be self explanatory...)
@@ -231,17 +231,13 @@ Helsinky, 6.11.2016
 %%
 \section{Introduction}
 
-The project of the virtual image generator has been developped as a helper software tool for the ASPECT project, which is part of the ESA's Asteroid Impact Misstion (AIM).
+The project of the virtual image generator has been developped as a helper software tool for the ASPECT project \cite{ASPECT}, which is part of the ESA's Asteroid Impact Misstion (AIM) \cite{AIM}.
 
 The goal of the AIM is to demonstrate new technologies, mainly in the telecommunications domain. The AIM mission will consist of the main spacecraft carrying the Mascot-2 asteroid lander,  as well as two or more CubeSats. The mission should launch in in October 2020, then travel to the Didymos asteriod pair. The spacecraft would perform high-resolution visual, thermal and radar mapping of the moon and build detailed maps of its surface and interior structure. 
-
-(Official site of the AIM project: $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission}{AIM \: website}$)
 
 The ASPECT project focuses on developping a single three-unit CubeSat equipped with a visible/near-infrared spectrometer to assess the asteroid composition and effects of space weathering and metamorphic shock, as well as post-impact plume observations. 
 
 The Cubesat will be deployed from a 10 km height from the target's surface and orbit it at around 1 to 3 km from the surface. From this distance it will measure the reflectance which will give an understanding of the composition of Didymoon and may provide answers to how this is influenced by space weathering and shock effect.
-
-(Official site of the ASPECT project: $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission/ASPECT}{ASPECT \: website}$)
 
 The navigation of the ASPECT CubeSat is a problematic task, and one of the things that could help it are the camera images. By using appropriate camera and appropriate software, position and speed could be estimated by analyzing the captured images. In order to determine a feasible camera setup and to test the analysis software, before it is deployed to the spacecraft, The Virtual Image Generator, VGI tool has been developped.
 
@@ -249,31 +245,11 @@ It simulates the movement of the spacecraft above surface along specified trajec
 
 The outcome of this work is a basic software application, ready for future extensions. Some of possible future improvements or applications are discussed in section 4. of this report.
 
-%% Opinn\"aytteess\"a jokainen osa alkaa uudelta sivulta, joten \clearpage
-%%
-%% In a thesis, every section starts a new page, hence \clearpage
 \clearpage
 
 \section{Software design}
 \subsection*{Basic information}
-The software project, as well as the source codes and corresponding libraries can be found on Github ($\href{https://github.com/JBurant/Space-Camera}{Space-Camera \: project}$), from there it can be forked or copied by anyone. 
-The application has been developped in java programming language (JDK 1.8), using NetBeans IDE. Therefore, in order to run it, installed java is required. Apart from basic java libraries, the libraries: $\href{https://github.com/jinput/jinput}{jinput}$, $\href{http://legacy.lwjgl.org/}{lwjgl \: ver.2.9.3}$ and $\href{https://github.com/LWJGL/lwjgl/tree/master/src/java/org/lwjgl/util}{lwjgl \: util}$ have been used. It can be run on any standard operation system (e.g. Windows, LinuxMint, Ubuntu etc.)
-
-The hardware requirements are not strict, any standard computer with installed java and decent graphics card is suitable. During testing, there was an issue with performance, using a notebook with just integrated graphics card, therefore a PC with standard graphics card is recommended. 
-
-The library lwjgl (lightweight java openGL library) enables to use the openGL in the java application, providing interface to the lower lever C++ openGL methods. The usage of this library is straightforward, and is very similar to using normaml openGL in C++. There are also many tutorials on the internet, providing guidance for the development. An important thing to notice is that the application is using lwjgl2. There is already newer version, lwjgl3, whose interface is slightly different and should not be mixed with version 2. The older version has been chosen, because the newer one didn't provide support for any GUI libraries at the time of development of this application.
-
-The Github bundle contains also prepared NetBeans project, which has those libraries already imported. Only thing that must be changed in the project specification is the java path to the native libraries. To do that, right click on libraries in the project tab and select properties, in the newly opened window, in the categories select Run and specify VM Options as :-Djava.library.path="Path-to-lwjgl-library/lwjgl-2.9.3/native/Desired-OS" (\ref{setUpPaths}).
-
-\begin{figure}[htb]
-\centering \includegraphics[height=7cm]{SetUpPaths.png}
-\caption{Setting up native path in NetBeans IDE\label{setUpPaths}}
-\end{figure}
-
-In case, that future development will be carried on using another IDE, the libraries must be added, and the path to native libraries must be set. Here is an example how to do that in eclipse:
-$\href{http://wiki.lwjgl.org/wiki/Setting_Up_LWJGL_with_Eclipse.html}{Set \: up \: lwjgl \: in \: Eclipse}$.
-
-After the initial imports and after setting the path, no more setup should be needed. 
+The application has been developped in java programming language, using JDK 1.8\cite{java} and NetBeansIDE\cite{NetBeans}. Apart from that, openGL in form in lwjgl \cite{lwjgl} library has been used, details can be found on official pages or in Appendix A.
 
 \subsection*{Architecture description}
 The application project itself consists of two packages. 
@@ -311,24 +287,7 @@ Once the simulation starts, the camera switches to view of the camera mounted on
 
 \section{Results}
 
-T\"ass\"a osassa esitet\"a\"an tulokset ja vastataan tutkielman alussa
-esitettyihin tutkimuskysymyksiin. Tieteellisen kirjoitelman
-arvo mitataan t\"ass\"a osassa esitettyjen tulosten perusteella. 
-
-%% Huomaa seuraavassa kappaleessa lainausmerkkien ulkopuolella piste, 
-%% koska piste ei lopeta lainattua tekstinp\"atk\"a\"a.
-%% Jos lainattu tekstinp\"atk\"a loppuu v\"alimerkkiin, tulee v\"alimerkki
-%% lainausmerkkien sis\"alle: 
-%% "Et tu, Brute?" sanoi Caesar kuollessaan.
-Tutkimustuloksien merkityst\"a on aina syyt\"a arvioida ja tarkastella
-kriittisesti.  Joskus tarkastelu voi olla t\"ass\"a osassa, mutta se
-voidaan my\"os j\"att\"a\"a viimeiseen osaan, jolloin viimeisen osan nimeksi
-tulee >>Tarkastelu>>. Tutkimustulosten merkityst\"a voi arvioida my\"os
->>Johtop\"a\"at\"okset>>-otsikon alla viimeisess\"a osassa. 
-
-T\"ass\"a osassa on syyt\"a my\"os arvioida tutkimustulosten luotettavuutta.
-Jos tutkimustulosten merkityst\"a arvioidaan >>Tarkastelu>>-osassa,
-voi luotettavuuden arviointi olla my\"os siell\"a. 
+TODO: testing 
 
 \clearpage
 
@@ -341,23 +300,31 @@ Still, there is a lot of room for future development and more improvements. Seve
 
 \subsection*{Improved GUI and rendering}
 
-The GUI, as stated earlier, is very simple. One of the possible improvements could be switching to another GUI library, for example TWL or nifty. That would allow more convenient control, for example adding of sliders for setting the position. Also, the rectangles symbolising the carrier and target are very primitive, therefore a better depiction could be introduced.
+The GUI, as stated earlier, is very simple. One of the possible improvements could be switching to another GUI library, for example TWL\cite{TWL} or nifty\cite{Nifty}. That would allow more convenient control, for example adding of sliders for setting the position. Also, the rectangles symbolising the carrier and target are very primitive, therefore a better depiction could be introduced.
 
 Besides those cosmetic changes, also coordinates system could be adjusted. Currently, the span of the x and y coordinates is fixly set from -4.5 to 4.5 for the top view, and the altitude is defined as distance from camera in the range from 0 to 10. For the real world applications, it would be a good idea to add the possibility to specify for example the real size of the 2D plane, and based on this values, the coordinates would be recalculated.
 
 \subsection*{Curved surface}
 
-The primary use of this software is presented as part of the asteroids mission program, but in case it finds its use in another projects, for example concerning Earth imaging, than a nice feature could become a slight curvature of the 2D plane, imitating the curvature of the Earth's surface. 
+The primary use of this software is presented as part of the asteroids mission program, but in case it finds its use in another projects, for example concerning Earth imaging, then a nice feature could become a slight curvature of the 2D plane, imitating the curvature of the Earth's surface. 
 
-In order to do so, the 2D plane would have to be changed to 3D sphere. This can be done by using the sphere object from the \textit{lwjgl.util.glu} package. Of course, such sphere would have quite big diameter, compared to the altitude of the spacecraft. 
+In order to do so, the 2D plane would have to be changed to 3D sphere. This can be done by using the sphere object from the \textit{lwjgl.util.glu} package \cite{lwjglSphere}. Of course, such sphere would have quite big diameter, compared to the altitude of the spacecraft. 
 
-The problem with rendering of the sphere is the texture mapping. In this work, no sphere textures were used so far, but if it is required in the future, it could be useful to express the coordinates in the spherical coordinate system, or to use the UV mapping technique ($\href{https://en.wikipedia.org/wiki/UV_mapping}{UV \: mapping \: on \: wikipedia}$ ). Although, given the error introduced by the curvature is small, it might be possible to just map the texture as if it was 2D plane and accept this error.
+The problem with rendering of the sphere is the texture mapping. In this work, no sphere textures were used so far, but if it is required in the future, it could be useful to express the coordinates in the spherical coordinate system, or to use the UV mapping technique \cite{UVmappingWiki}. Although, given the error introduced by the curvature is small, it might be possible to just map the texture as if it was 2D plane and accept this error.
 
 \subsection*{Custom 3D surface}
 
 Another extension, similar to the previous one, but more complicated could be loading of arbitrary surface of the 'land'. Such feature could be useful specifically i a project such as the asteroid impact mission, because the surface of the asteriod is very different from 2D plane, and the spacecraft would be close enough to recognize those irregularities.
 
+The first thing such approach needs is a 3D model. The model should be presented in some easily parsable format, such as .obj, because a custom parser has to be created. The loading and parsing of a .obj model is nothing hard and there are tutorials on the internet \cite{Load3DModel}. After the model has been created and loaded into the aplication, the texture has to be loaded to cover it. This is the hard part, again UV mapping\cite{UVmappingWiki} could be helpful in this case. Unfortunatelly, 3D texturing is way out of the scope of this work. 
 
+\subsection*{Light intensity and Attenuation}
+
+\subsection*{curved trajectory}
+
+\subsection*{Configuration file}
+
+\subsection*{Console input}
 
 \clearpage
 %% L\"ahdeluettelo
@@ -374,105 +341,74 @@ Another extension, similar to the previous one, but more complicated could be lo
 \begin{thebibliography}{99}
 
 %% Alla pilkun j\"alkeen on pakotettu oikea v\"ali \<v\"alily\"onti>-merkeill\"a.
-\bibitem{Kauranen} Kauranen,\ I., Mustakallio,\ M. ja Palmgren,\ V.
-  \textit{Tutkimusraportin kirjoittamisen opas opinn\"aytety\"on
-    tekij\"oille.}  Espoo, Teknillinen korkeakoulu, 2006.
+\bibitem{AIM} Asteroid impact mission presentation:
+	  
+$\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission}{http://www.esa.int/Our\_Activities/Space\_Engineering\_Technology/Asteroid\_Impact_Mission}$, 5th November, 2016.
 
-\bibitem{Itkonen} Itkonen,\ M. \textit{Typografian k\"asikirja.} 3.\
-  painos.  Helsinki, RPS-yhti\"ot, 2007.
+\bibitem{ASPECT} ASPECT project presentation:
 
-\bibitem{Koblitz} Koblitz,\ N. \textit{A Course in Number Theory and
-    Cryptography. Graduate Texts in Mathematics 114.}  2.\ painos. New
-  York, Springer, 1994.
+$\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_Impact_Mission/ASPECT}{http://www.esa.int/Our\_Activities/Space\_Engineering\_Technology/Asteroid\_Impact\_Mission/ASPECT}$,
+  5th November, 2016.
 
-%% Kun on useampi nimikirjain, jokaisen nimikirjaimen v\"aliin
-%% kuuluu v\"alily\"onti. Oikea v\"alin m\"a\"ar\"a on saatu \<v\"alily\"onnill\"a>
-\bibitem{bcs} Bardeen,\ J., Cooper,\ L.\ N. ja Schrieffer,\ J.\ R.
-  Theory of Superconductivity. \textit{Physical Review,} 1957, vol.\
-  108, nro~5, s.\ 1175--1204.
+\bibitem{java} Java JDK 1.8 homepage:
 
-\bibitem{Deschamps} Deschamps,\ G.\ A. Electromagnetics and
-  Differential Forms. \textit{Proceedings of the IEEE,} 1981, vol.\
-  69, nro~6, s.\ 676--696.
+    $\href{http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}{http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html}$,
+  5th November, 2016.
 
-%% Alla esimerkki englanninkielisen tavuttamisen pakottamisesta.
-%% Oletusarvoisesti k\"aytet\"a\"an suomalaista tavutusta, mutta viitteiss\"a
-%% esiintyy usein muunkielisi\"a lauseita, jotka tulevat siten tavutetuksi
-%% suomen kielen s\"a\"ant\"ojen mukaan. T\"am\"an voi korjata \foreignlanguage-
-%% komennolla, jonka ensimm\"ainen parametri on vieraan kielen nimi ja toinen 
-%% on vieraalla kielell\"a tavutettava teksti. 
-\bibitem{Sihvola} Sihvola,\ A.\ et al.
-  \foreignlanguage{english}{Interpretation of measurements of helix 
-    and bihelix superchiral structures.}
-  Teoksessa: Jacob,\ A.\ F. ja
-  Reinert,\ J. (toim.) \textit{Bianisotropics '98 7th International
-    Conference on Complex Media.}  Braunschweig, 3.--6.6.1998.
-  Braunscweig, Technische Universit\"at Braunschweig, 1998, s.\
-  317--320.
+\bibitem{NetBeans} NetBeans homepage:
 
-%% Alla on suomalainen yhdistelm\"asukunimi. Sen nimien v\"aliss\"a 
-%% k\"aytet\"a\"an yhdysmerkki\"a l. tavuviivaa, kirjoitetaan -.
-\bibitem{Lindblom} Lindblom-Yl\"anne,\ S. ja Wager,\ M.  Tieteellisten
-  opinn\"aytet\"oiden ohjaaminen. Teoksessa: Lindblom-Yl\"anne,\ S. ja
-  Nevgi,\ A. (toim.) \textit{Yliopisto- ja korkeakouluopettajan
-    k\"asikirja.}  Helsinki, WSOY, 2004, s.\ 314--325.
- 
-\bibitem{Miinusmaa} Miinusmaa,\ H. Neliskulmaisen rei\"an poraamisesta
-  kolmikulmaisella poralla. Diplomity\"o, Teknillinen korkeakoulu,
-  konetekniikan osasto, Espoo, 1977.
+    $\href{https://netbeans.org/}{https://netbeans.org/}$,
+  5th November, 2016.
 
-%% T\"ass\"a taas pakotettu englanninkielinen tavutus. 
-%% Pedanttinen kirjoittaja pakottaa tietysti jokaiseen englanninkieliseen
-%% lauseeseen englannin tavutuksen, mutta t\"ass\"a esityksess\"a ei n\"ain ole
-%% tehty selvyyden ja l\"ahdekoodin luettavuuden takia. 
-\bibitem{Loh} Loh,\ N.\ C. High-Resolution Micromachined
-  Interferometric Accelerometer. Master's Thesis, Massachusetts
-  Institute of Technology, Cambridge,
-  \foreignlanguage{english}{Massachusetts,} 1992.
+\bibitem{lwjgl} Lwjgl 2 library page:
 
-\bibitem{Lonnqvist} L\"onnqvist,\ A.
-  \foreignlanguage{english}{Applications of hologram-based compact
-    range: antenna radiation pattern, radar cross section, and
-    absorber reflectivity measurements.}
-  V\"ait\"oskirja, Teknillinen korkeakoulu, s\"ahk\"o- ja tietoliikennetekniikan
-  osasto, 2006.
+    $\href{http://legacy.lwjgl.org/}{http://legacy.lwjgl.org/}$,
+  5th November, 2016.
 
-\bibitem{sfs} SFS 5342. Kirjallisuusviitteiden laatiminen. 2.\ painos.
-  Helsinki, Suomen standardisoimisliitto, 2004. 20~s.
+\bibitem{lwjglUtil} Lwjgl util library page:
 
-\bibitem{haastattelu} Palmgren,\ V. Suunnittelija. Teknillinen
-  korkeakoulu, kirjasto. Otaniementie 9, 02150 Espoo. Haastattelu
-  15.1.2007.
+    $\href{https://github.com/LWJGL/lwjgl/tree/master/src/java/org/lwjgl/util}{https://github.com/LWJGL/lwjgl/tree/master/src/java/org/lwjgl/util}$,
+  5th November, 2016.
 
-\bibitem{Ribeiro} Ribeiro,\ C.\ B., Ollila,\ E. ja Koivunen,\ V.
-  \foreignlanguage{english}{Stochastic Maximum-Likelihood Method for
-    MIMO Propagation Parameter Estimation.}
- \textit{IEEE Transactions
-    on Signal Processing,} verkkolehti, vol.\ 55, nro~1, s.\ 46--55.
-  Viitattu 19.1.2007. Lehti ilmestyy my\"os painettuna. DOI:
-  10.1109/TSP.2006.882057.
+\bibitem{jinput} Jinput library page:
 
-\bibitem{Stieber} Stieber,\ T. GnuPG Hacks. \textit{Linux Journal,}
-  verkkolehti, 2006, maaliskuu, nro~143. Viitattu 19.1.2007. Lehti
-  ilmestyy my\"os painettuna. Saatavissa:
-  \url{http://www.linuxjournal.com/article/8732.}
+    $\href{https://github.com/jinput/jinput}{https://github.com/jinput/jinput}$,
+  5th November, 2016.
 
-\bibitem{kone} Pohjois-Koivisto,\ T. Voiko kone tulevaisuudessa arvata
-  tahtosi?  \textit{Apropos,} verkkolehti, helmikuu, nro~1, 2005.
-  Viitattu 19.1.2007.  Saatavissa:
-  \url{http://www.apropos.fi/1-2005/prima.php.}
+\bibitem{gitHub} The gitHub page of this project:
 
-\bibitem{Adida} Adida,\ B.  Advances in Cryptographic Voting Systems.
-  Verkkodokumentti. Ph.D.\ Thesis, Massachusetts Institute of
-  Technology, Cambridge, 
-  \foreignlanguage{english}{Massachusetts,}
-  2006. Viitattu 19.1.2007.  Saatavissa:
-  \url{http://crypto.csail.mit.edu/~cis/theses/adida-phd.pdf.}
+    $\href{https://github.com/JBurant/Space-Camera}{https://github.com/JBurant/Space-Camera}$,
+  5th November, 2016.
 
-\bibitem{viittaaminen} Kilpel\"ainen,\ P. WWW-l\"ahteisiin viittaaminen
-  tutkielmatekstiss\"a. Verkkodokumentti. P\"aivitetty 26.11.2001.
-  Viitattu 19.1.2007. Saatavissa:
-  \url{http://www.cs.uku.fi/~kilpelai/wwwlahteet.html.}
+\bibitem{eclipse} Eclipse example of setting up lwjgl:
+
+    $\href{http://wiki.lwjgl.org/wiki/Setting_Up_LWJGL_with_Eclipse.html}{http://wiki.lwjgl.org/wiki/Setting\_Up\_LWJGL\_with\_Eclipse.html}$,
+  5th November, 2016.
+
+\bibitem{UVmappingWiki} UV mapping page on wikipedia:
+
+    $\href{https://en.wikipedia.org/wiki/UV_mapping}{https://en.wikipedia.org/wiki/UV\_mapping}$,
+  5th November, 2016.
+
+\bibitem{TWL} Themable Widget Library (TWL) for java:
+
+    $\href{http://twl.l33tlabs.org/}{http://twl.l33tlabs.org/}$,
+  5th November, 2016.
+
+\bibitem{Nifty} Nifty GUI library for java:
+
+    $\href{https://github.com/nifty-gui/nifty-gui/wiki}{https://github.com/nifty-gui/nifty-gui/wiki}$,
+  5th November, 2016.
+
+\bibitem{lwjglSphere} Lwjgl sphere javadoc:
+
+    $\href{http://legacy.lwjgl.org/javadoc/org/lwjgl/util/glu/Sphere.html}{http://legacy.lwjgl.org/javadoc/org/lwjgl/util/glu/Sphere.html}$,
+  5th November, 2016.
+
+\bibitem{Load3DModel} Video tutorial for loading a 3D model using lwjgl:
+
+    $\href{https://www.youtube.com/watch?v=izKAvSV3qk0}{https://www.youtube.com/watch?v=izKAvSV3qk0}$,
+  5th November, 2016.
 
 \end{thebibliography}
 
@@ -482,95 +418,27 @@ Another extension, similar to the previous one, but more complicated could be lo
 
 \thesisappendix
 
-\section{Esimerkki liitteest\"a\label{LiiteA}}
+\section{Installation and usage\label{LiiteA}}
 
-Liitteet eiv\"at ole opinn\"aytteen kannalta v\"altt\"am\"att\"omi\"a ja 
-opinn\"aytteen tekij\"an on 
-kirjoittamaan ryhtyess\"a\"an hyv\"a ajatella p\"arj\"a\"av\"ans\"a ilman liitteit\"a.
-Kokemattomat kirjoittajat, jotka ovat huolissaan
-tekstiosan pituudesta, paisuttavat turhan 
-helposti liitteit\"a pit\"a\"akseen tekstiosan pituuden annetuissa rajoissa.
-T\"all\"a tavalla ei synny hyv\"a\"a opinn\"aytett\"a.   
+The software project, as well as the source codes and corresponding libraries can be found on Github \cite{gitHub}, from there it can be forked or copied by anyone. 
+As stated in section 2, the application has been developped in java programming language (JDK 1.8), using NetBeans IDE. Therefore, in order to run it, installed java is required. Apart from basic java libraries, the libraries: \textit{jinput} \cite{jinput}, \textit{lwjgl} \cite{lwjgl} and \textit{lwjgl util} \cite{lwjglUtil} have been used. It can be run on any standard operation system (e.g. Windows, LinuxMint, Ubuntu etc.)
 
-Liite on itsen\"ainen kokonaisuus, vaikka se t\"aydent\"a\"akin tekstiosaa.
-Liite ei siten ole pelkk\"a listaus, kuva tai taulukko, vaan 
-liitteess\"a selitet\"a\"an aina sis\"all\"on laatu ja tarkoitus. 
+The hardware requirements are not strict, any standard computer with installed java and decent graphics card is suitable. During testing, there was an issue with performance, using a notebook with just integrated graphics card, therefore a PC with standard graphics card is recommended. 
 
-Liitteeseen voi laittaa esimerkiksi listauksia. Alla on 
-listausesimerkki t\"am\"an liitteen luomisesta. 
+The library lwjgl (lightweight java openGL library) enables to use the openGL in the java application, providing interface to the lower lever C++ openGL methods. The usage of this library is straightforward, and is very similar to using normal openGL in C++. There are also many tutorials on the internet, providing guidance for the development. An important thing to notice is that the application is using lwjgl2. There is already newer version, lwjgl3, whose interface is slightly different and should not be mixed with version 2. The older version has been chosen, because the newer one didn't provide support for any GUI libraries at the time of development of this application.
 
-%% Verbatim-ymp\"arist\"o ei muotoile tai tavuta teksti\"a. Fontti on monospace.
-%% Verbatim-ymp\"arist\"on sis\"all\"a annettuja komentoja ei LaTeX k\"asittele. 
-%% Vasta \end{verbatim}-komennon j\"alkeen jatketaan k\"asittely\"a.
-\begin{verbatim}
-	\clearpage
-	\appendix
-	\addcontentsline{toc}{section}{Liite A}
-	\section*{Liite A}
-	...
-	\thispagestyle{empty}
-	...
-	teksti\"a
-	...
-	\clearpage
-\end{verbatim}
+The Github bundle contains also prepared NetBeans project, which has those libraries already imported. Only thing that must be changed in the project specification is the java path to the native libraries. To do that, right click on libraries in the project tab and select properties, in the newly opened window, in the categories select Run and specify VM Options as :-Djava.library.path="Path-to-lwjgl-library/lwjgl-2.9.3/native/Desired-OS" (\ref{setUpPaths}).
 
-Kaavojen numerointi muodostaa liitteiss\"a oman kokonaisuutensa:
-\begin{eqnarray}
-d \wedge A  &=& F, \label{liitekaava1}\\
-d \wedge F  &=& 0. \label{liitekaava2}
-\end{eqnarray}
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{SetUpPaths.png}
+\caption{Setting up native path in NetBeans IDE\label{setUpPaths}}
+\end{figure}
 
+In case, that future development will be carried on using another IDE, the libraries must be added, and the path to native libraries must be set. An example of how to do that in eclipse can be found in \cite{eclipse}.
 
-\clearpage
-\section{Toinen esimerkki liitteest\"a\label{LiiteB}}
+After the initial imports and after setting the path, no more setup should be needed. 
 
-%% Liitteiden kaavat, taulukot ja kuvat numeroidaan omana kokonaisuutenaan
-%%
-%% Equations, tables and figures have their own numbering in Appendices
-%\renewcommand{\theequation}{B\arabic{equation}}
-%\setcounter{equation}{0}  
-%\renewcommand{\thefigure}{B\arabic{figure}}
-%\setcounter{figure}{0}
-%\renewcommand{\thetable}{B\arabic{table}}
-%\setcounter{table}{0}
-
-Liitteiss\"a voi my\"os olla kuvia, jotka
-eiv\"at sovi leip\"atekstin joukkoon:
-%% Ymp\"arist\"on figure parametrit htb pakottavat
-%% kuvan t\"ah\"an, eik\"a LaTeX yrit\"a siirrell\"a niit\"a
-%% hyv\"aksi katsomaansa paikkaan. 
-%% Ymp\"arist\"o\"a center voi k\"aytt\"a\"a \centering-
-%% komennon sijaan
-%%
-%% Example of a figure, note the use of htb parameters which force
-%% the figure to be inserted here
-%%\begin{figure}[htb]
-%%\begin{center}
-%%\includegraphics[height=8cm]{kuva2}
-%%\end{center}
-%%\caption{Kuvateksti, jossa on liitteen numerointi}
-%%\label{liitekuva}
-%%\end{figure}
-%%
-Liitteiden taulukoiden numerointi on kuvien ja kaavojen kaltainen:
-\begin{table}[htb]
-\caption{Taulukon kuvateksti.}
-\label{liitetaulukko}
-\begin{center}
-\fbox{
-\begin{tabular}{lp{0.5\linewidth}}
-9.00--9.55  & K\"aytett\"avyystestauksen tiedotustilaisuus (osanottajat
-ovat saaneet s\"ahk\"opostitse valmistautumisteht\"av\"at, joten tiedotustilaisuus
-voidaan pit\"a\"a lyhyen\"a).\\
-9.55--10.00 & Testausalueelle siirtyminen
-\end{tabular}}
-\end{center}
-\end{table}
-Kaavojen numerointi muodostaa liitteiss\"a oman kokonaisuutensa:
-\begin{eqnarray}
-T_{ik} &=& -p g_{ik} + w u_i u_k + \tau_{ik},  \label{liitekaava3} \\
-n_i    &=& n u_i + v_i.                      \label{liitekaava4}
-\end{eqnarray}
+The application can then be compiled using the IDE and consequently run.
+The application can also be run as already compiled .jar file. In this case it is sufficient to just double click on the icon. In this case only java needs to be installed. As for the output of the program, the images, they are automatically stored to a folder with name **, therefore such folder must exist beforehand.
 
 \end{document}

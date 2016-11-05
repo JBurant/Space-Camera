@@ -7,6 +7,7 @@ package cameraproject;
 
 import java.awt.BorderLayout;
 import java.awt.Canvas;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static org.lwjgl.opengl.GL11.*;
@@ -22,8 +23,13 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import utils.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.LWJGLException;
@@ -103,7 +109,11 @@ public class CameraProject {
      * Height of the created display.
      */
     public final int DISPLAY_HEIGHT=800;        
-
+    /**
+    *  File extension for the screenshots.
+    */
+    private String fileExt;
+    
     /**
      * Initializes the application and enters the render loop.
      */
@@ -125,6 +135,7 @@ public class CameraProject {
      */
     public void init() {
         inputData=new InputData();
+        fileExt="jpg";
         
         JFrame frame = new JFrame();        
         
@@ -191,6 +202,7 @@ public class CameraProject {
         JPanel initPosPanel = new JPanel();
         JPanel endPosPanel = new JPanel();
         JPanel stepSizePanel = new JPanel();
+        JPanel formatTypePanel = new JPanel();
         JPanel cameraControlPanel = new JPanel();
         
         //Set Layouts as BoxLayouts
@@ -198,15 +210,34 @@ public class CameraProject {
         endPosPanel.setLayout(new BoxLayout(endPosPanel, BoxLayout.LINE_AXIS));
         stepSizePanel.setLayout(new BoxLayout(stepSizePanel, BoxLayout.LINE_AXIS));
         cameraControlPanel.setLayout(new BoxLayout(cameraControlPanel, BoxLayout.LINE_AXIS));
+        formatTypePanel.setLayout(new BoxLayout(formatTypePanel, BoxLayout.LINE_AXIS));
         
         //Construct labels
         JLabel labelInitPos=new JLabel("Initial position");
         JLabel labelEndPos=new JLabel("End position   ");
         JLabel labelStepSize=new JLabel("Number of Images");
+        JLabel labelFormatType=new JLabel("Output format");
         JLabel cameraLabel=new JLabel("Camera angles");
         JLabel cameraLabelAlpha = new JLabel("alpha");
         JLabel cameraLabelOmega = new JLabel("omega");
+        JLabel cameraLabelFov = new JLabel("field of view");
         
+        String [] data= new String[]{"jpg","png"};
+        
+        JList list = new JList(data); //data has type Object[]
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(2);
+        list.addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+              fileExt=data[list.getSelectedIndex()];
+            }
+        });
+        JScrollPane listScroller = new JScrollPane(list);
+        
+
         //Construct text fields and add documentListeners with mappings
         JTextField textFieldInitPosx = new JTextField("0",5);
         textFieldInitPosx.getDocument().addDocumentListener(listener);
@@ -238,6 +269,9 @@ public class CameraProject {
         JTextField textFieldOmega = new JTextField("0",3);
         textFieldOmega.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldOmega.getDocument(), inputData.omega);
+        JTextField textFieldFov = new JTextField("0",3);
+        textFieldFov.getDocument().addDocumentListener(listener);
+        listener.addMapping(textFieldFov.getDocument(), inputData.fov);
         
         //Fill the stepSizePanel
         stepSizePanel.add(labelStepSize);
@@ -272,7 +306,14 @@ public class CameraProject {
         cameraControlPanel.add(textFieldAlpha);
         cameraControlPanel.add(cameraLabelOmega);
         cameraControlPanel.add(textFieldOmega);
+        cameraControlPanel.add(cameraLabelFov);
+        cameraControlPanel.add(textFieldFov);
         cameraControlPanel.setMaximumSize(cameraControlPanel.getPreferredSize());
+        
+        formatTypePanel.add(labelFormatType);
+        formatTypePanel.add(Box.createHorizontalStrut(10));
+        formatTypePanel.add(listScroller);
+        formatTypePanel.setMaximumSize(formatTypePanel.getPreferredSize());
         
         sidePanel.setLayout(new BoxLayout(sidePanel, BoxLayout.PAGE_AXIS));
         sidePanel.setSize(300,DISPLAY_HEIGHT);
@@ -280,6 +321,8 @@ public class CameraProject {
         //Fill the sidePanel
         sidePanel.add(Box.createVerticalStrut(50));
         sidePanel.add(stepSizePanel);
+        sidePanel.add(Box.createVerticalStrut(10));
+        sidePanel.add(formatTypePanel);
         sidePanel.add(Box.createVerticalStrut(10));
         sidePanel.add(initPosPanel);
         sidePanel.add(Box.createVerticalStrut(10));
@@ -320,26 +363,6 @@ public class CameraProject {
                 }
         }    });
     }
-
-    /**
-     * Sets a new openGL model to the carrier.
-     * @param posX New X coordinate of the carrier
-     * @param posY New Y coordinate of the carrier
-     * @return Model of the carrier
-     */
-    public Model drawCarrier(float posX, float posY) {
-        carrier.setModel(posX,posY);
-        return carrier.model;
-    }
-
-    /**
-     * Sets a new openGL model to the Land.
-     * @return Model of the Land
-     */
-    public Model drawLand() {
-        land.setModel();
-        return land.model;       
-    }
    
     /**
      * The main render loop.
@@ -351,14 +374,6 @@ public class CameraProject {
         land=new Land(wWidth, wHeight, "img/tahiti.jpg");
         target=new Target();
 
-        //Set up the openGL
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(0, 900, 0, 600, 100, -100);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity(); //Reset the camera
-
         //Create new shader and cameras
         Shader shader = new Shader();
         Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f,0,0);
@@ -367,6 +382,7 @@ public class CameraProject {
         
         int mainWidth=wWidth-300;
         int mainHeight=wHeight;
+        boolean renderTargetCarrier=true;
         
         moving=false;
         stepSize=0.5f;
@@ -377,7 +393,7 @@ public class CameraProject {
         boolean takePic=false;
         
       while(!Display.isCloseRequested()) {
-      if(Display.isVisible()) {
+        if(Display.isVisible()) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer	
             glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);            
             shader.bind();
@@ -393,23 +409,26 @@ public class CameraProject {
                 
                 camera2.alpha=inputData.alpha.getValue();
                 camera2.omega=inputData.omega.getValue();
+                camera2.fov=inputData.fov.getValue();
             }
             
             if(moving){
                 currentCamera=camera2;
                 carrierPos.add(step);
                 camera2.setPosition(carrierPos);
+                renderTargetCarrier=false;
             }else{
                 currentCamera=camera;
+                renderTargetCarrier=true;
             }
             
             targetPos.x=inputData.endPosX.getValue();
             targetPos.y=inputData.endPosY.getValue();
-            targetPos.z=inputData.endPosY.getValue();
+            targetPos.z=inputData.endPosZ.getValue();
             
             camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
             glViewport(0,0,mainWidth,mainHeight);
-            drawMainView(shader,carrierPos,currentCamera,targetPos);
+            drawMainView(shader,carrierPos,currentCamera,targetPos,renderTargetCarrier);
             
             glUseProgram(0);
                         
@@ -431,9 +450,7 @@ public class CameraProject {
                 carrierPos.z=inputData.initPosZ.getValue();
             }
       }
-      
       takePic=moving;
-
     }
       
       System.out.println("destroy");
@@ -448,7 +465,7 @@ public class CameraProject {
      * @param camera Camera capturing the scene.
      * @param targetPos Position of the target.
      */
-    public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera, Vector3f targetPos){
+    public void drawMainView(Shader shader, Vector3f carrierPos, Camera camera, Vector3f targetPos, boolean renderTargetCarrier){
         Model model;
         
         shader.setUniform("projection", camera.getProjection()); 
@@ -456,10 +473,33 @@ public class CameraProject {
         
         model=drawLand();            
         model.render();
-        model=drawCarrier(carrierPos.x,carrierPos.y);
-        model.render();
-        model=drawTarget(targetPos.x,targetPos.y);
-        model.render();
+        
+        if(renderTargetCarrier){
+            model=drawCarrier(carrierPos.x,carrierPos.y,carrierPos.z);
+            model.render();
+            model=drawTarget(targetPos.x,targetPos.y,targetPos.z);
+            model.render();
+        }
+    }
+    
+    /**
+     * Sets a new openGL model to the carrier.
+     * @param posX New X coordinate of the carrier
+     * @param posY New Y coordinate of the carrier
+     * @return Model of the carrier
+     */
+    public Model drawCarrier(float posX, float posY, float posZ) {
+        carrier.setModel(posX,posY,posZ);
+        return carrier.model;
+    }
+
+    /**
+     * Sets a new openGL model to the Land.
+     * @return Model of the Land
+     */
+    public Model drawLand() {
+        land.setModel();
+        return land.model;       
     }
     
     /**
@@ -468,8 +508,8 @@ public class CameraProject {
      * @param posY New Y position of the target.
      * @return New model of the target.
      */
-    public Model drawTarget(float posX, float posY){
-        target.setModel(posX,posY);
+    public Model drawTarget(float posX, float posY, float posZ){
+        target.setModel(posX,posY,posZ);
         return target.model;
     }
     
@@ -497,10 +537,9 @@ public class CameraProject {
      * @param bpp Color and alpha.
      */
     public void saveImage(int width, int height, ByteBuffer buffer,int bpp){      
-    String name="img/screenshots/screenshot" + imgCounter + ".jpg"; 
+    String name="img/screenshots/screenshot" + imgCounter + "." + fileExt; 
     imgCounter++;
     File file = new File(name);
-    String format = "jpg";
     BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
    
     for(int x = 0; x < width; x++) 
@@ -515,7 +554,7 @@ public class CameraProject {
     }
     }
         try {
-            ImageIO.write(image, format, file);
+            ImageIO.write(image, fileExt, file);
         } catch (Exception ex) {
             System.out.println("exc");
             Logger.getLogger(CameraProject.class.getName()).log(Level.SEVERE, null, ex);

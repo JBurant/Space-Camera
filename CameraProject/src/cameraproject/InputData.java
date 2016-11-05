@@ -6,8 +6,8 @@
 package cameraproject;
 
 /**
- *
- * @author Jirka3
+ * Stores data from the GUI input.
+ * @author Jiri Burant
  */
 public class InputData {
     public FloatWrapper initPosX;
@@ -19,6 +19,7 @@ public class InputData {
     public FloatWrapper noImages;
     public FloatWrapper alpha;
     public FloatWrapper omega;
+    public FloatWrapper fov;
     
     public InputData(){
      this.initPosX=new FloatWrapper();
@@ -30,5 +31,6 @@ public class InputData {
      this.noImages=new FloatWrapper();
      this.alpha=new FloatWrapper();
      this.omega=new FloatWrapper();     
+     this.fov=new FloatWrapper();
     }
 }
