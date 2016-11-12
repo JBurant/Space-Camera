@@ -249,7 +249,7 @@ The outcome of this work is a basic software application, ready for future exten
 
 \section{Software design}
 \subsection*{Basic information}
-The application has been developped in java programming language, using JDK 1.8\cite{java} and NetBeansIDE\cite{NetBeans}. Apart from that, openGL in form in lwjgl \cite{lwjgl} library has been used, details can be found on official pages or in Appendix A.
+The application has been developped in java programming language, using JDK 1.8\cite{java} and NetBeansIDE\cite{NetBeans}. Apart from that, openGL in form of lwjgl \cite{lwjgl} library has been used, details can be found on official pages or in Appendix A.
 
 \subsection*{Architecture description}
 The application project itself consists of two packages. 
@@ -260,7 +260,7 @@ The code itself is thoroughly documented and self-explanatory. Nevertheless, a b
 
 The main class is called \textit{CameraProject.java} In this class, the basic GUI initialization is carried out as well as the openGL initialization. Moreover, the main rendering loop is also located there.
 
-For each of the rendered objects, that means the target location, the surface plane and the spacecraft, a dedicated class containing the parameters for the given object, has been created. Those classes are named: \textit{Target.java}, \textit{Land.java} and \textit{Carrier.java}, respetivelly. These three classes have a common parent named \textit{SceneObject.java}, which contains the common parameters, that each scene object must have, as Texture \textit{Texture.java} and Model \textit{Model.java}. Class \textit{Texture.java} contains the loaded texture for the given object and the class \textit{Model.java} contains parameters and methods for rendering of the scene objects.
+For each of the rendered objects, that means the target location, the surface plane and the spacecraft, a dedicated class containing the parameters for the given object, has been created. Those classes are named: \textit{Target.java}, \textit{Land.java} and \textit{Carrier.java}, respectivelly. These three classes have a common parent named \textit{SceneObject.java}, which contains the common parameters, that each scene object must have, as Texture \textit{Texture.java} and Model \textit{Model.java}. Class \textit{Texture.java} contains the loaded texture for the given object and the class \textit{Model.java} contains parameters and methods for rendering of the scene objects.
 
 Class named \textit{Shader.java} is purely openGL based, and creates the shaders for rendering. The shaders specify, how should each pixel be rendered (color, texture, attenuation and so on.)
 
@@ -272,7 +272,7 @@ The remaining classes \textit{TextFieldListener.java}, \textit{FloatWrapper.java
 
 The GUI has been developped using the java's native Swing library. The GUI is simple and comprises of several labels and text fields for entering the input data and two buttons, one for starting the simulation, one for loading the texture. The layout has been chosen as box layout, because it is straightforward and easy to modify.
 
-In the fig.\ref{GUIExample}, there is an example of how the running apllication looks like. On the left side, there is a surface (land) covered with texture of an island. Over it, a blue and a smaller red rectangles are drawn. They symbolize the spacecraft (carrier) and the target. On the right side, the GUI panel is shown. First field is number of images to be taken during the flight, Underneath is initial position of the spacecraft, the three coordinates specify the x,y,z position in the respective coordinate system. The line end position specified the target location. Last fields are camera parameters, namely two angles of the camera measured as deviation from the y and x axis. Finally, there are buttons for starting the simulation and for loading of the surface texture.
+In the fig.\ref{GUIExample}, there is an example of how the running apllication looks like. On the left side, there is a surface (land) covered with texture of an island. Over it, a blue and a smaller red rectangles are drawn. They symbolize the spacecraft (carrier) and the target. On the right side, the GUI panel is shown. First field is number of images to be taken during the flight. The second field specifies the output image type, for the time being there are just two options, \textit{.jpg} and \textit{.png.}Underneath, there is the initial position of the spacecraft, the three coordinates specify the x,y,z position in the respective coordinate system. The trajectory's end position specifies the target location. Last fields are camera parameters, namely two angles of the camera measured as deviation from the x, respectively y axis, specified in radians, and the field of view of the camera, specified in degrees. Finally, there are buttons for starting the simulation and for loading of the surface texture.
 
 \begin{figure}[htb]
 \centering \includegraphics[height=7cm]{GUIExample.png}
@@ -356,7 +356,7 @@ The results of those tests were quite convincing, and they suggest, that the ima
 
 The aim of this work was to develop an application capable of generating simulated images captured by a camera mounted on a spacecraft during a flight over 2D surface. It can be stated that such application, for simplified setup, was successfully developped and the results are convincing.
 
-Still, there is a lot of room for future development and more improvements. Several suggestions for improvement are listed below.
+Still, there is a lot of room for future development and more improvements. Several suggestions for such improvements are listed below.
 
 
 \subsection*{Improved GUI and rendering}
@@ -375,25 +375,43 @@ The problem with rendering of the sphere is the texture mapping. In this work, n
 
 \subsection*{Custom 3D surface}
 
-Another extension, similar to the previous one, but more complicated could be loading of arbitrary surface of the 'land'. Such feature could be useful specifically i a project such as the asteroid impact mission, because the surface of the asteriod is very different from 2D plane, and the spacecraft would be close enough to recognize those irregularities.
+Another extension, similar to the previous one, but more complicated could be loading of arbitrary surface of the 'land'. Such feature could be useful specifically in a project such as the asteroid impact mission, because the surface of the asteriod is very different from 2D plane, and the spacecraft would be close enough to recognize those irregularities.
 
-The first thing such approach needs is a 3D model. The model should be presented in some easily parsable format, such as .obj, because a custom parser has to be created. The loading and parsing of a .obj model is nothing hard and there are tutorials on the internet \cite{Load3DModel}. After the model has been created and loaded into the aplication, the texture has to be loaded to cover it. This is the hard part, again UV mapping\cite{UVmappingWiki} could be helpful in this case. Unfortunatelly, 3D texturing is way out of the scope of this work. 
+The first thing such approach needs is a 3D model. The model should be presented in some easily parsable format, such as .obj, because a custom parser has to be created. The loading and parsing of a .obj model is nothing hard and there are tutorials on the internet \cite{Load3DModel}. After the model has been created and loaded into the application, the texture has to be loaded to cover it. This is the hard part, again UV mapping\cite{UVmappingWiki} could be helpful in this case. Unfortunately, 3D texturing is way out of the scope of this work. 
 
 \subsection*{Light intensity and Attenuation}
 
+When simulating images of a surface, it is certainly worth considering the parameters of the light source, it's intensity, position and so on. Also, the parameters of the surface, such as reflexivity could be taken into account. 
+
+The light intensity for every pixel should be calculated in the shader, therefore this is the main class to be modified. There are several ways how to approach this problem, in computer graphics the Lambertian Illumination Model is perhaps the most popular one. The important parameters are: intensity and direction of the incoming light, the distance from the light source, the normal vector, the basic color of the surface and the ambient light intensity.
+
+A nice tutorial about this model and its implementation in java can be found in \cite{ShaderTut}.
+
+This modification would also require change of the GUI, to set the light source parameters.
+
 \subsection*{Curved trajectory}
 
-In this work, only line trajectory of the spacecraft has been assumed. It is sufficient for most of the cases, but a possible improvement could be a curved trajectory, especially in connection with the curved or custom 3D surface. In that case, several other input parameters should be added. Assuming that the shape of the trajectory would be circular, which is the most probable case, such curvature could be specified by adding the coordinates of the center of this hypothetic circle. Using this point and the initial and target point, the trajectory can be calculated, example on the figure \ref{CurvedTrajectory}.
+In this work, only line trajectory of the spacecraft has been assumed. It is sufficient for most of the cases, but a possible improvement could be a curved trajectory, especially in connection with the curved or custom 3D surface. In that case, several other input parameters should be added. Assuming that the shape of the trajectory would be circular, which is the most probable case, such curvature could be specified by adding the coordinates of the center of this hypothetic circle. Using this point and the initial and target point, the trajectory can be calculated, an example is portraited on the figure \ref{CurvedTrajectory}.
 
 \begin{figure}[htb]
 \centering \includegraphics[height=7cm]{CurvedTrajectory.png}
-\caption{Curved trajectory schema\label{CurvedTrajectory}}
+\caption{Curved trajectory scheme\label{CurvedTrajectory}}
 \end{figure}
 
+\subsection*{Configuration file and console input} 
 
-\subsection*{Configuration file}
+In order to automatize the image generation, the configuration file can be created. Then, the parameters can be automatically loaded to the application instead of manually entering them in the GUI.
 
-\subsection*{Console input}
+The configuration file can be a simple text file. An example of such file is in the figure \ref{exampleConfig}.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{exampleConfig.png}
+\caption{Example of a configuration file\label{exampleConfig}}
+\end{figure}
+
+Such file can be read using the java file parser, reading the file line by line, breaking it into separate strings and then using them as key-value pairs to set up the parameters.
+
+To automatize the process even further, the option of calling the application with parameters from console could be added. The application can be called from console by entering: java -jar CameraProject.jar, parameters can be added at the end of the call and consequently read by the java application, in the \textit{main} method as \textit{args} field. In such manner, the configuration file can be loaded as a parameter.
 
 \clearpage
 %% L\"ahdeluettelo
@@ -484,6 +502,11 @@ $\href{http://www.esa.int/Our_Activities/Space_Engineering_Technology/Asteroid_I
     $\href{http://ninjacave.com/jarsplice}{http://ninjacave.com/jarsplice}$,
   5th November, 2016.
 
+\bibitem{ShaderTut} Tutorial on light intensity and attenuation:
+
+    $\href{https://github.com/mattdesl/lwjgl-basics/wiki/ShaderLesson6}{https://github.com/mattdesl/lwjgl-basics/wiki/ShaderLesson6}$,
+  5th November, 2016.
+
 \end{thebibliography}
 
 %% Appendices
@@ -499,7 +522,7 @@ As stated in section 2, the application has been developped in java programming 
 
 The hardware requirements are not strict, any standard computer with installed java and decent graphics card is suitable. During testing, there was an issue with performance, using a notebook with just integrated graphics card, therefore a PC with standard graphics card is recommended. 
 
-The library lwjgl (lightweight java openGL library) enables to use the openGL in the java application, providing interface to the lower lever C++ openGL methods. The usage of this library is straightforward, and is very similar to using normal openGL in C++. There are also many tutorials on the internet, providing guidance for the development. An important thing to notice is that the application is using lwjgl2. There is already newer version, lwjgl3, whose interface is slightly different and should not be mixed with version 2. The older version has been chosen, because the newer one didn't provide support for any GUI libraries at the time of development of this application.
+The library lwjgl (lightweight java openGL library) enables to use the openGL in the java application, providing interface to the lower level C++ openGL methods. The usage of this library is straightforward, and is very similar to using normal openGL in C++. There are also many tutorials on the internet, providing guidance for the development. An important thing to notice is that the application is using lwjgl2. There is already newer version, lwjgl3, whose interface is slightly different and should not be mixed with version 2. The older version has been chosen, because the newer one didn't provide support for any GUI libraries at the time of development of this application.
 
 The Github bundle contains also prepared NetBeans project, which has those libraries already imported. Only thing that must be changed in the project specification is the java path to the native libraries. To do that, right click on libraries in the project tab and select properties, in the newly opened window, in the categories select Run and specify VM Options as :-Djava.library.path="Path-to-lwjgl-library/lwjgl-2.9.3/native/Desired-OS" (\ref{setUpPaths}).
 
@@ -512,9 +535,38 @@ In case, that future development will be carried on using another IDE, the libra
 
 After the initial imports and after setting the path, no more setup should be needed. 
 
-The application can then be compiled using the IDE and consequently run.
-The application can also be run as already compiled .jar file. In this case it is sufficient to just double click on the icon. In this case only java needs to be installed. As for the output of the program, the images, they are automatically stored to a folder with name **, therefore such folder must exist beforehand.
+The application can be compiled using the IDE and consequently run.
+It can also be run as already compiled .jar file. 
 
-In order to Deploy a new jar file, a so called fat jar must be created. This can be done for example using the  JarSplice tool \cite{JarSplice}, which packs the project libraries as well as corresponding native libraries into one executable jar folder.
+In order to compile and deploy a new .jar file, a so called fat jar must be created. This can be done for example using the  JarSplice tool \cite{JarSplice}, which packs the project libraries as well as corresponding native libraries into one executable jar folder.
+
+Step-by-step creation of such "fat jar" is shown in the figures below.
+
+In this case only java needs to be installed. Then it can be run for example from the console by typing: "java -jar CameraProjectFat.jar" As for the output of the program, the images are automatically stored to a folder with relative path "./img/screenshots", therefore such folder must exist beforehand.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{jarSplice1.png}
+\caption{Building fat jar: Step1\label{jarSplice1}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{jarSplice2.png}
+\caption{Building fat jar: Step2\label{jarSplice2}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{jarSplice3.png}
+\caption{Building fat jar: Step3\label{jarSplice3}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{jarSplice4.png}
+\caption{Building fat jar: Step4\label{jarSplice4}}
+\end{figure}
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{jarSplice5.png}
+\caption{Building fat jar: Step5\label{jarSplice5}}
+\end{figure}
 
 \end{document}

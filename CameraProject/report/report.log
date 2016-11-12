@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  5 NOV 2016 18:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  12 NOV 2016 14:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1217,13 +1217,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 153--154
 ] [2
 
 ]
-<GUIExample.png, id=99, 1598.97375pt x 825.0825pt>
+<GUIExample.png, id=99, 1599.9775pt x 829.0975pt>
 File: GUIExample.png Graphic file (type png)
  <use GUIExample.png>
 Package pdftex.def Info: GUIExample.png used on input line 278.
-(pdftex.def)             Requested size: 385.9818pt x 199.16928pt.
-
-[3 <./GUIExample.png>] <screenTest1.png, id=108, 1604.99625pt x 825.0825pt>
+(pdftex.def)             Requested size: 384.34424pt x 199.16928pt.
+ [3 <./GUIExample.png>] <screenTest1.png, id=108, 1604.99625pt x 825.0825pt>
 File: screenTest1.png Graphic file (type png)
 
 <use screenTest1.png>
@@ -1289,72 +1288,105 @@ Package pdftex.def Info: screenshot3.jpg used on input line 349.
 t20.jpg>] [6 <./screenshot30.jpg> <./screenTest2.png> <./screenshot0.jpg>] [7 <
 ./screenshot1.jpg> <./screenshot2.jpg> <./screenshot3.jpg>] [8
 
-] <CurvedTrajectory.png, id=165, 449.68pt x 349.305pt>
+] <CurvedTrajectory.png, id=166, 449.68pt x 349.305pt>
 File: CurvedTrajectory.png Graphic file (type png)
 
 <use CurvedTrajectory.png>
-Package pdftex.def Info: CurvedTrajectory.png used on input line 389.
+Package pdftex.def Info: CurvedTrajectory.png used on input line 397.
 (pdftex.def)             Requested size: 256.40259pt x 199.16928pt.
- [9 <./CurvedTrajectory.png>]
-Overfull \hbox (114.18721pt too wide) in paragraph at lines 415--416
+ <exampleConfig.png, id=168, 260.975pt x 277.035pt>
+File: exampleConfig.png Graphic file (type png)
+
+<use exampleConfig.png>
+Package pdftex.def Info: exampleConfig.png used on input line 408.
+(pdftex.def)             Requested size: 187.62311pt x 199.16928pt.
+ [9] [10 <./CurvedTrajectory.png> <./exampleConfig.png>]
+Overfull \hbox (114.18721pt too wide) in paragraph at lines 433--434
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (-20) : \OML/lmm/m/it/12 ==www:esa
 :int=Our[]Activities=Space[]Engineering[]Technology=Asteroid[]Impact[]ission[][
 ]$\T1/lmr/m/n/12 (-20) ,
  []
 
 
-Overfull \hbox (184.44962pt too wide) in paragraph at lines 419--421
+Overfull \hbox (184.44962pt too wide) in paragraph at lines 437--439
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (-20) : \OML/lmm/m/it/12 ==www:esa
 :int=Our[]Activities=Space[]Engineering[]Technology=Asteroid[]Impact[]Mission=A
 SPECT[][]$\T1/lmr/m/n/12 (-20) ,
  []
 
 
-Underfull \hbox (badness 5519) in paragraph at lines 424--426
+Underfull \hbox (badness 5519) in paragraph at lines 442--444
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (+20) : \OML/lmm/m/it/12 ==www:ora
 cle:com=technetwork=java=javase=downloads=jdk\OT1/lmr/m/n/12 (+20) 8 \OMS/lmsy/
 m/n/12 ^^@
  []
 
 
-Underfull \hbox (badness 3209) in paragraph at lines 474--476
+Underfull \hbox (badness 3209) in paragraph at lines 492--494
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (+20) : \OML/lmm/m/it/12 ==legacy:
 lwjgl:org=javadoc=org=lwjgl=util=glu=Sphere:html[][]$\T1/lmr/m/n/12 (+20) , 5th
 
  []
 
-[10
+[11
 
-] [11] <SetUpPaths.png, id=217, 1606.0pt x 871.255pt>
+] [12] <SetUpPaths.png, id=227, 1606.0pt x 871.255pt>
 File: SetUpPaths.png Graphic file (type png)
  <use SetUpPaths.png>
-Package pdftex.def Info: SetUpPaths.png used on input line 507.
+Package pdftex.def Info: SetUpPaths.png used on input line 530.
 (pdftex.def)             Requested size: 367.11772pt x 199.16928pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 520.
 
-[12
+<jarSplice1.png, id=230, 882.29625pt x 479.7925pt>
+File: jarSplice1.png Graphic file (type png)
+ <use jarSplice1.png>
+Package pdftex.def Info: jarSplice1.png used on input line 548.
+(pdftex.def)             Requested size: 366.25381pt x 199.16928pt.
 
-] [13 <./SetUpPaths.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 520.
+<jarSplice2.png, id=231, 881.2925pt x 481.8pt>
+File: jarSplice2.png Graphic file (type png)
+ <use jarSplice2.png>
+Package pdftex.def Info: jarSplice2.png used on input line 553.
+(pdftex.def)             Requested size: 364.30414pt x 199.16928pt.
+
+<jarSplice3.png, id=232, 879.285pt x 476.78125pt>
+File: jarSplice3.png Graphic file (type png)
+ <use jarSplice3.png>
+Package pdftex.def Info: jarSplice3.png used on input line 558.
+(pdftex.def)             Requested size: 367.31151pt x 199.16928pt.
+
+<jarSplice4.png, id=233, 878.28125pt x 481.8pt>
+File: jarSplice4.png Graphic file (type png)
+ <use jarSplice4.png>
+Package pdftex.def Info: jarSplice4.png used on input line 563.
+(pdftex.def)             Requested size: 363.05937pt x 199.16928pt.
+
+<jarSplice5.png, id=234, 879.285pt x 481.8pt>
+File: jarSplice5.png Graphic file (type png)
+ <use jarSplice5.png>
+Package pdftex.def Info: jarSplice5.png used on input line 568.
+(pdftex.def)             Requested size: 363.4743pt x 199.16928pt.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 572.
+ [13
+
+]
+[14 <./SetUpPaths.png> <./jarSplice1.png>] [15 <./jarSplice2.png> <./jarSplice3
+.png>] [16 <./jarSplice4.png> <./jarSplice5.png>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 572.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 520.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 520.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 572.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 572.
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 674468ED005CE338286F7013E7C79228;439.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 520.
+(rerunfilecheck)             Checksum: 3475C1EFA1937BD4F2548754FF517F24;439.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 572.
  ) 
 Here is how much of TeX's memory you used:
- 18087 strings out of 493304
- 320003 string characters out of 6139871
- 852359 words of memory out of 5000000
- 20985 multiletter control sequences out of 15000+600000
- 64508 words of font info for 98 fonts, out of 8000000 for 9000
+ 18141 strings out of 493304
+ 320806 string characters out of 6139871
+ 853688 words of memory out of 5000000
+ 21016 multiletter control sequences out of 15000+600000
+ 64910 words of font info for 102 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 70i,10n,59p,822b,588s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,10n,59p,1061b,588s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
 c/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/s
 hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texlive/texmf-dist/fonts/en
@@ -1365,10 +1397,10 @@ texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/l
 mr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fo
 nts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on report.pdf (17 pages, 3827510 bytes).
+Output written on report.pdf (20 pages, 3905572 bytes).
 PDF statistics:
- 287 PDF objects out of 1000 (max. 8388607)
- 237 compressed objects within 3 object streams
- 67 named destinations out of 1000 (max. 500000)
- 20118 words of extra memory for PDF output out of 20736 (max. 10000000)
+ 323 PDF objects out of 1000 (max. 8388607)
+ 258 compressed objects within 3 object streams
+ 76 named destinations out of 1000 (max. 500000)
+ 20148 words of extra memory for PDF output out of 20736 (max. 10000000)
 

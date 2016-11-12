@@ -1,0 +1,13 @@
+images 6
+init -3 0 9
+end 2 1 9
+alpha 0
+omega 0
+fov 35
+
+
+
+
+
+
+

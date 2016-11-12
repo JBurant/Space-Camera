@@ -102,7 +102,9 @@ public Vector3f getPosition(){
  */
 public Matrix4f getProjection(){
     Vector3f foc=new Vector3f(focus.x, focus.y,focus.z);
-    foc.x=this.focus.z*(float)Math.tan(alpha)+this.position.x;
+    foc.x=(this.focus.z-this.position.z)*(float)Math.tan(alpha)+this.position.x;
+    System.out.println(foc.x);
+    System.out.println(Math.tan(alpha));
     foc.y=this.focus.z*(float)Math.tan(omega)+this.position.y;
     view=new Matrix4f().setLookAt(this.position, foc, new Vector3f(0,1,0));
     projection=new Matrix4f().setPerspective(fov, width/height, 0.1f, 100f);
