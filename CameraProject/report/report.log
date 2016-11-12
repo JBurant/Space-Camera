@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  12 NOV 2016 14:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  12 NOV 2016 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1397,7 +1397,7 @@ texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/l
 mr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fo
 nts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on report.pdf (20 pages, 3905572 bytes).
+Output written on report.pdf (20 pages, 3906114 bytes).
 PDF statistics:
  323 PDF objects out of 1000 (max. 8388607)
  258 compressed objects within 3 object streams
