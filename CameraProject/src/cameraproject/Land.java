@@ -30,32 +30,16 @@ public class Land extends SceneObject{
     public void setModel(){
         tex.bind(0);
         float landWidth;
-        float landHeight;
+        float landHeight;    
         
-        landWidth=tex.width;
-        int heightRatio=tex.height/wHeight;
-        
-        if(heightRatio>1){
-            landHeight=MAX_HEIGHT;
-            landWidth=tex.width*(MAX_HEIGHT/tex.height);
+       float ratio= (float)tex.width/(float)tex.height;
+        System.out.println(ratio);
+        if(ratio>1){
+            landWidth=10f;
+            landHeight=10f/ratio;
         }else{
-            landHeight=tex.height;
-        }
-        
-        float widthRatio=tex.width/landWidth;
-        
-        if(widthRatio>1){
-            landWidth=MAX_WIDTH;
-            landHeight=tex.height*(MAX_WIDTH/tex.width);
-        }else{
-            landWidth=tex.width;
-        }       
-        
-        float ratio= tex.width/tex.height;
-        
-        if(ratio>=1){
-            landWidth=10.5f;
-            landHeight=10.5f/ratio;
+            landWidth=8f*ratio;
+            landHeight=8f;
         }
         
         float posZ=10f;
@@ -69,17 +53,17 @@ public class Land extends SceneObject{
         };
                 
         float[] texture = new float[]{
-            1,1,
-            1,0,
+            1,1,   
+            1,0, 
             0,0,
-            0,1,
+            0,1, 
         };            
             
         int[] indices = new int[]{
             0,1,2,
             0,2,3
         };
-             
+
         this.model = new Model(vertices, texture, indices);
     }   
 }

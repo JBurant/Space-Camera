@@ -375,8 +375,8 @@ public class CameraProject {
 
         //Create new shader and cameras
         Shader shader = new Shader();
-        Camera camera = new Camera(640,480,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),35f,0,0);
-        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(1f,0f,10f),35f,0,0);
+        Camera camera = new Camera(800,500,new Vector3f(0,0,8f),new Vector3f(0f,0,10f),140,0,0);
+        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(0f,0f,10f),40f,0,0);
         Camera currentCamera = camera;
         
         int mainWidth=wWidth-300;
@@ -522,6 +522,7 @@ public class CameraProject {
      */
     public Model drawTarget(float posX, float posY, float posZ){
         target.setModel(posX,posY,posZ);
+        System.out.println(posY);
         return target.model;
     }
     
