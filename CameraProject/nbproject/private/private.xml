@@ -5,7 +5,9 @@
         <group>
             <file>file:/home/jiri/Space-Camera/CameraProject/src/cameraproject/Camera.java</file>
             <file>file:/home/jiri/Space-Camera/CameraProject/src/cameraproject/Land.java</file>
+            <file>file:/home/jiri/Space-Camera/CameraProject/src/cameraproject/TextFieldListener.java</file>
             <file>file:/home/jiri/Space-Camera/CameraProject/src/cameraproject/CameraProject.java</file>
+            <file>file:/home/jiri/Space-Camera/CameraProject/src/cameraproject/InputData.java</file>
         </group>
     </open-files>
 </project-private>

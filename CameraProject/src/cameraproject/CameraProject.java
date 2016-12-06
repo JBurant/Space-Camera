@@ -449,8 +449,8 @@ public class CameraProject {
      * @param camera The spacecraft camera.
      */
     public void setCameraData(Camera camera){
-        camera.alpha=inputData.alpha.getValue();
-        camera.omega=inputData.omega.getValue();
+        camera.alpha=(((float)Math.PI)*inputData.alpha.getValue())/180;
+        camera.omega=(((float)Math.PI)*inputData.omega.getValue())/180;
         camera.fov=inputData.fov.getValue();
     }
     
