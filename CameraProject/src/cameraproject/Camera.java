@@ -115,12 +115,12 @@ public Matrix4f getProjection(){
 public Matrix4f perspective(float left,float right,float bottom,float top,float near,float far){
         Matrix4f matrix = new Matrix4f();
     
-       matrix.m00(-1 / ((float)Math.tan(Math.PI*fov/90)*(width/height)));
-       matrix.m11(1 / ((float)Math.tan(Math.PI*fov/90)));
+       matrix.m00(-1 / ((float)Math.tan(Math.PI*fov/180)*(width/height)));
+       matrix.m11(1 / ((float)Math.tan(Math.PI*fov/180)));
        matrix.m22(-(far +near)/(far - near));
        matrix.m23(-1);
        matrix.m32(2.0f*(near*far)/(near-far));
-       System.out.println(Math.PI*fov/90);
+       System.out.println(Math.PI*fov/180);
        System.out.println(matrix);
        return matrix;
 }

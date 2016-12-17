@@ -375,7 +375,7 @@ public class CameraProject {
 
         //Create new shader and cameras
         Shader shader = new Shader();
-        Camera camera = new Camera(1024,768,new Vector3f(0,0,8f),new Vector3f(0f,0f,10f),35f,0,0);
+        Camera camera = new Camera(1024,768,new Vector3f(0,0,0f),new Vector3f(0f,0f,10f),35f,0,0);
         Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(0f,0f,10f),35f,0,0);
         Camera currentCamera = camera;
         
