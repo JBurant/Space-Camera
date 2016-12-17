@@ -33,7 +33,7 @@ public class Land extends SceneObject{
         float landHeight;    
         
        float ratio= (float)tex.width/(float)tex.height;
-        System.out.println(ratio);
+        //System.out.println(ratio);
         if(ratio>1){
             landWidth=10f;
             landHeight=10f/ratio;

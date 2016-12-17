@@ -67,7 +67,7 @@ public Camera(int width, int height, Vector3f eye, Vector3f focus, float fov, fl
     this.omega=omega;
     this.position= eye;
     this.focus=focus;
-    this.fov=(float)Math.toRadians(fov);
+    this.fov=fov;
     this.projection=new Matrix4f().setPerspective(fov, width/height, 0.1f, 100f);
     this.view=new Matrix4f().setLookAt(eye, this.focus, new Vector3f(0,1,0));
 } 
@@ -108,21 +108,20 @@ public Matrix4f getProjection(){
     projection= perspective(-5f,5f,-5f,5f, 1f, 100f);
     float yScale = (float) (1 / (Math.tan(Math.toRadians(fov / 2))));
     float xScale = yScale / (width/height);
-    System.out.println(xScale);
-    System.out.println(yScale);
-    System.out.println(projection);
+    
     Matrix4f target = projection.mul(view);
     return target;
 }
 public Matrix4f perspective(float left,float right,float bottom,float top,float near,float far){
         Matrix4f matrix = new Matrix4f();
     
-       matrix.m00(-1 / (float)Math.tan(0.5f * fov)/(width/height));
-       matrix.m11(1 / (float)Math.tan(0.5f * fov));
+       matrix.m00(-1 / ((float)Math.tan(Math.PI*fov/90)*(width/height)));
+       matrix.m11(1 / ((float)Math.tan(Math.PI*fov/90)));
        matrix.m22(-(far +near)/(far - near));
        matrix.m23(-1);
        matrix.m32(2.0f*(near*far)/(near-far));
-
+       System.out.println(Math.PI*fov/90);
+       System.out.println(matrix);
        return matrix;
 }
 }

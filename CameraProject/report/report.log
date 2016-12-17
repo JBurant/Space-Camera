@@ -1,8 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  12 NOV 2016 16:48
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2014.9.11)  15 DEC 2016 19:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**report.tex
+**report
 (./report.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 78 languages loaded.
@@ -1220,67 +1220,67 @@ Underfull \hbox (badness 10000) in paragraph at lines 153--154
 <GUIExample.png, id=99, 1599.9775pt x 829.0975pt>
 File: GUIExample.png Graphic file (type png)
  <use GUIExample.png>
-Package pdftex.def Info: GUIExample.png used on input line 278.
+Package pdftex.def Info: GUIExample.png used on input line 280.
 (pdftex.def)             Requested size: 384.34424pt x 199.16928pt.
  [3 <./GUIExample.png>] <screenTest1.png, id=108, 1604.99625pt x 825.0825pt>
 File: screenTest1.png Graphic file (type png)
 
 <use screenTest1.png>
-Package pdftex.def Info: screenTest1.png used on input line 304.
+Package pdftex.def Info: screenTest1.png used on input line 306.
 (pdftex.def)             Requested size: 387.43558pt x 199.16928pt.
  <screenshot00.jpg, id=109, 1204.5pt x 803.0pt>
 File: screenshot00.jpg Graphic file (type jpg)
 
 <use screenshot00.jpg>
-Package pdftex.def Info: screenshot00.jpg used on input line 309.
+Package pdftex.def Info: screenshot00.jpg used on input line 311.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot10.jpg, id=110, 1204.5pt x 803.0pt>
 File: screenshot10.jpg Graphic file (type jpg)
 
 <use screenshot10.jpg>
-Package pdftex.def Info: screenshot10.jpg used on input line 314.
+Package pdftex.def Info: screenshot10.jpg used on input line 316.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot20.jpg, id=111, 1204.5pt x 803.0pt>
 File: screenshot20.jpg Graphic file (type jpg)
 
 <use screenshot20.jpg>
-Package pdftex.def Info: screenshot20.jpg used on input line 319.
+Package pdftex.def Info: screenshot20.jpg used on input line 321.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot30.jpg, id=112, 1204.5pt x 803.0pt>
 File: screenshot30.jpg Graphic file (type jpg)
 
 <use screenshot30.jpg>
-Package pdftex.def Info: screenshot30.jpg used on input line 324.
+Package pdftex.def Info: screenshot30.jpg used on input line 326.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenTest2.png, id=113, 1598.97375pt x 822.07124pt>
 File: screenTest2.png Graphic file (type png)
 
 <use screenTest2.png>
-Package pdftex.def Info: screenTest2.png used on input line 329.
+Package pdftex.def Info: screenTest2.png used on input line 331.
 (pdftex.def)             Requested size: 387.3969pt x 199.16928pt.
  <screenshot0.jpg, id=114, 1204.5pt x 803.0pt>
 File: screenshot0.jpg Graphic file (type jpg)
 
 <use screenshot0.jpg>
-Package pdftex.def Info: screenshot0.jpg used on input line 334.
+Package pdftex.def Info: screenshot0.jpg used on input line 336.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot1.jpg, id=115, 1204.5pt x 803.0pt>
 File: screenshot1.jpg Graphic file (type jpg)
 
 <use screenshot1.jpg>
-Package pdftex.def Info: screenshot1.jpg used on input line 339.
+Package pdftex.def Info: screenshot1.jpg used on input line 341.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot2.jpg, id=116, 1204.5pt x 803.0pt>
 File: screenshot2.jpg Graphic file (type jpg)
 
 <use screenshot2.jpg>
-Package pdftex.def Info: screenshot2.jpg used on input line 344.
+Package pdftex.def Info: screenshot2.jpg used on input line 346.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  <screenshot3.jpg, id=117, 1204.5pt x 803.0pt>
 File: screenshot3.jpg Graphic file (type jpg)
 
 <use screenshot3.jpg>
-Package pdftex.def Info: screenshot3.jpg used on input line 349.
+Package pdftex.def Info: screenshot3.jpg used on input line 351.
 (pdftex.def)             Requested size: 213.38211pt x 142.26378pt.
  [4
 
@@ -1292,37 +1292,37 @@ t20.jpg>] [6 <./screenshot30.jpg> <./screenTest2.png> <./screenshot0.jpg>] [7 <
 File: CurvedTrajectory.png Graphic file (type png)
 
 <use CurvedTrajectory.png>
-Package pdftex.def Info: CurvedTrajectory.png used on input line 397.
+Package pdftex.def Info: CurvedTrajectory.png used on input line 399.
 (pdftex.def)             Requested size: 256.40259pt x 199.16928pt.
  <exampleConfig.png, id=168, 260.975pt x 277.035pt>
 File: exampleConfig.png Graphic file (type png)
 
 <use exampleConfig.png>
-Package pdftex.def Info: exampleConfig.png used on input line 408.
+Package pdftex.def Info: exampleConfig.png used on input line 410.
 (pdftex.def)             Requested size: 187.62311pt x 199.16928pt.
  [9] [10 <./CurvedTrajectory.png> <./exampleConfig.png>]
-Overfull \hbox (114.18721pt too wide) in paragraph at lines 433--434
+Overfull \hbox (114.18721pt too wide) in paragraph at lines 435--436
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (-20) : \OML/lmm/m/it/12 ==www:esa
 :int=Our[]Activities=Space[]Engineering[]Technology=Asteroid[]Impact[]ission[][
 ]$\T1/lmr/m/n/12 (-20) ,
  []
 
 
-Overfull \hbox (184.44962pt too wide) in paragraph at lines 437--439
+Overfull \hbox (184.44962pt too wide) in paragraph at lines 439--441
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (-20) : \OML/lmm/m/it/12 ==www:esa
 :int=Our[]Activities=Space[]Engineering[]Technology=Asteroid[]Impact[]Mission=A
 SPECT[][]$\T1/lmr/m/n/12 (-20) ,
  []
 
 
-Underfull \hbox (badness 5519) in paragraph at lines 442--444
+Underfull \hbox (badness 5519) in paragraph at lines 444--446
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (+20) : \OML/lmm/m/it/12 ==www:ora
 cle:com=technetwork=java=javase=downloads=jdk\OT1/lmr/m/n/12 (+20) 8 \OMS/lmsy/
 m/n/12 ^^@
  []
 
 
-Underfull \hbox (badness 3209) in paragraph at lines 492--494
+Underfull \hbox (badness 3209) in paragraph at lines 494--496
 []$[][]\OML/lmm/m/it/12 http \OT1/lmr/m/n/12 (+20) : \OML/lmm/m/it/12 ==legacy:
 lwjgl:org=javadoc=org=lwjgl=util=glu=Sphere:html[][]$\T1/lmr/m/n/12 (+20) , 5th
 
@@ -1333,60 +1333,60 @@ lwjgl:org=javadoc=org=lwjgl=util=glu=Sphere:html[][]$\T1/lmr/m/n/12 (+20) , 5th
 ] [12] <SetUpPaths.png, id=227, 1606.0pt x 871.255pt>
 File: SetUpPaths.png Graphic file (type png)
  <use SetUpPaths.png>
-Package pdftex.def Info: SetUpPaths.png used on input line 530.
+Package pdftex.def Info: SetUpPaths.png used on input line 532.
 (pdftex.def)             Requested size: 367.11772pt x 199.16928pt.
 
 <jarSplice1.png, id=230, 882.29625pt x 479.7925pt>
 File: jarSplice1.png Graphic file (type png)
  <use jarSplice1.png>
-Package pdftex.def Info: jarSplice1.png used on input line 548.
+Package pdftex.def Info: jarSplice1.png used on input line 550.
 (pdftex.def)             Requested size: 366.25381pt x 199.16928pt.
 
 <jarSplice2.png, id=231, 881.2925pt x 481.8pt>
 File: jarSplice2.png Graphic file (type png)
  <use jarSplice2.png>
-Package pdftex.def Info: jarSplice2.png used on input line 553.
+Package pdftex.def Info: jarSplice2.png used on input line 555.
 (pdftex.def)             Requested size: 364.30414pt x 199.16928pt.
 
 <jarSplice3.png, id=232, 879.285pt x 476.78125pt>
 File: jarSplice3.png Graphic file (type png)
  <use jarSplice3.png>
-Package pdftex.def Info: jarSplice3.png used on input line 558.
+Package pdftex.def Info: jarSplice3.png used on input line 560.
 (pdftex.def)             Requested size: 367.31151pt x 199.16928pt.
 
 <jarSplice4.png, id=233, 878.28125pt x 481.8pt>
 File: jarSplice4.png Graphic file (type png)
  <use jarSplice4.png>
-Package pdftex.def Info: jarSplice4.png used on input line 563.
+Package pdftex.def Info: jarSplice4.png used on input line 565.
 (pdftex.def)             Requested size: 363.05937pt x 199.16928pt.
 
 <jarSplice5.png, id=234, 879.285pt x 481.8pt>
 File: jarSplice5.png Graphic file (type png)
  <use jarSplice5.png>
-Package pdftex.def Info: jarSplice5.png used on input line 568.
+Package pdftex.def Info: jarSplice5.png used on input line 570.
 (pdftex.def)             Requested size: 363.4743pt x 199.16928pt.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 572.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 574.
  [13
 
 ]
 [14 <./SetUpPaths.png> <./jarSplice1.png>] [15 <./jarSplice2.png> <./jarSplice3
 .png>] [16 <./jarSplice4.png> <./jarSplice5.png>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 572.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 574.
  (./report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 572.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 572.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 574.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 574.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: 3475C1EFA1937BD4F2548754FF517F24;439.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 572.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 574.
  ) 
 Here is how much of TeX's memory you used:
- 18141 strings out of 493304
- 320806 string characters out of 6139871
+ 18143 strings out of 493304
+ 320830 string characters out of 6139871
  853688 words of memory out of 5000000
  21016 multiletter control sequences out of 15000+600000
- 64910 words of font info for 102 fonts, out of 8000000 for 9000
+ 65039 words of font info for 103 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 70i,10n,59p,1061b,588s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 70i,10n,59p,841b,588s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
 c/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/s
 hare/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texlive/texmf-dist/fonts/en
@@ -1397,7 +1397,7 @@ texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/public/lm/l
 mr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb></usr/share/texmf/fo
 nts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
-Output written on report.pdf (20 pages, 3906114 bytes).
+Output written on report.pdf (20 pages, 3906242 bytes).
 PDF statistics:
  323 PDF objects out of 1000 (max. 8388607)
  258 compressed objects within 3 object streams
