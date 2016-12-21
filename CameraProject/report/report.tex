@@ -272,7 +272,7 @@ The remaining classes \textit{TextFieldListener.java}, \textit{FloatWrapper.java
 
 The GUI has been developped using the java's native Swing library. The GUI is simple and comprises of several labels and text fields for entering the input data and two buttons, one for starting the simulation, one for loading the texture. The layout has been chosen as box layout, because it is straightforward and easy to modify.
 
-In the fig.\ref{GUIExample}, there is an example of how the running application looks like. On the left side, there is a surface (land) covered with texture of an island. Over it, a blue and a smaller red rectangles are drawn. They symbolize the spacecraft (blue one) and the target (red one). On the right side, the GUI panel is shown. First field is number of images to be taken during the flight. The second field specifies the output image type, for the time being there are just two options, \textit{.jpg} and \textit{.png.}Underneath, there is the initial position of the spacecraft, the three coordinates specify the x,y,z position in the coordinate system. The middle beginning of the coordinate system [0,0,0] is in the middle of the screen. The coordinates have no real measurement unit dimension.
+In the fig.\ref{GUIExample}, there is an example of how the running applTication looks like. On the left side, there is a surface (land) covered with texture of an island. Over it, a blue and a smaller red rectangles are drawn. They symbolize the spacecraft (blue one) and the target (red one). On the right side, the GUI panel is shown. First field is number of images to be taken during the flight. The second field specifies the output image type, for the time being there are just two options, \textit{.jpg} and \textit{.png.}Underneath, there is the initial position of the spacecraft, the three coordinates specify the x,y,z position in the coordinate system. The middle beginning of the coordinate system [0,0,0] is in the middle of the screen. The coordinates have no real measurement unit dimension.
 
 The trajectory's end position specifies the target location. Last fields are camera parameters, namely two angles of the camera (alpha and omega), measured as deviation from the x and y axis respectively, and specified in degrees. The last field is the field of view of the camera, also specified in degrees. Finally, there are buttons for starting the simulation and for loading of the surface texture.
 
@@ -281,7 +281,14 @@ The trajectory's end position specifies the target location. Last fields are cam
 \caption{Example run of the application\label{GUIExample}}
 \end{figure}
 
-The coordinate system of the rendered left part of the window is classical 3D Cartesian system, which spans from -6.5 to 6.5 for the x and y coordinates. For the z coordinates, it spans from 0 to 10, while 10 being the coordinate of the surface plane. Therefore the z coordinate is somewhat reversed altitude, as 0 is at the overview, top camera location and 10 is on the surface.
+The coordinate system of the rendered left part of the window is classical 3D Cartesian system, which spans from -9 to 9 for the x and -7 to 7 for the y coordinates. As for the z coordinates, it spans from -10 to 0, while -10 being the coordinate of the surface plane. The point z=0 is at the overview, top camera location and -10 is on the surface.
+
+The figure \ref{AnglesAndAxes} explains the relations of the angles and axes.
+
+\begin{figure}[htb]
+\centering \includegraphics[height=7cm]{AnglesAndAxes.png}
+\caption{Angles and axes of the layout\label{AnglesAndAxes}}
+\end{figure}
 
 Once the simulation starts, the camera switches to view of the camera mounted on the spacecraft, with the specified parameters. The images captured by the spacecraft are rendered and consequently saved into a file. A few examples of such images are presented in the section 3.
 
@@ -295,10 +302,10 @@ The application was tested for several different setups of camera parameters, di
 
 Following figures depict two example cases, their setup and the resulting screenshots, for both tests 4 steps were chosen.
 
-In the first example case the spacecraft flew from coordinates [-3,-3,9] to coordinates [3,3,9]
+In the first example case the spacecraft flew from coordinates [-3,-3,-9] to coordinates [3,3,-9]
 
-In the second example case the spacecraft flew from coordinates [-3,3,7] to coordinates [2,-1,9], because it started on z coordinate 7, it was outside of the camera scope, therefore there it is not visible in the setup figure.
-Also, the omega angle has been chosen as -0.01rad, therefore the image is slightly tilted.
+In the second example case the spacecraft flew from coordinates [-3,3,-7] to coordinates [2,-1,-9].
+The omega angle has been chosen as 10 degrees, therefore the image is slightly tilted.
 
 The results of those tests were quite convincing, and they suggest, that the image generation works correctly.
 

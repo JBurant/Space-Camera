@@ -42,7 +42,7 @@ public class Land extends SceneObject{
             landHeight=8f;
         }
         
-        float posZ=10f;
+        float posZ=-10f;
         
         //Build and set the model
         float[] vertices = new float[]{
@@ -53,10 +53,10 @@ public class Land extends SceneObject{
         };
                 
         float[] texture = new float[]{
-            1,1,   
-            1,0, 
+            0,1,
             0,0,
-            0,1, 
+            1,0,
+            1,1,                 
         };            
             
         int[] indices = new int[]{

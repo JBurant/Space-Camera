@@ -24,10 +24,10 @@ public class InputData {
     public InputData(){
      this.initPosX=new FloatWrapper();
      this.initPosY=new FloatWrapper();
-     this.initPosZ=new FloatWrapper(9);
+     this.initPosZ=new FloatWrapper(-9);
      this.endPosX=new FloatWrapper();
      this.endPosY=new FloatWrapper();
-     this.endPosZ=new FloatWrapper(9);
+     this.endPosZ=new FloatWrapper(-9);
      this.noImages=new FloatWrapper();
      this.alpha=new FloatWrapper();
      this.omega=new FloatWrapper();     

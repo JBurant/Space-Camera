@@ -244,7 +244,7 @@ public class CameraProject {
         JTextField textFieldInitPosy = new JTextField("0",5);        
         textFieldInitPosy.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldInitPosy.getDocument(), inputData.initPosY);
-        JTextField textFieldInitPosz = new JTextField("9",5);
+        JTextField textFieldInitPosz = new JTextField("-9",5);
         textFieldInitPosz.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldInitPosz.getDocument(), inputData.initPosZ);
 
@@ -254,7 +254,7 @@ public class CameraProject {
         JTextField textFieldEndPosy = new JTextField("0",5);
         textFieldEndPosy.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldEndPosy.getDocument(), inputData.endPosY);
-        JTextField textFieldEndPosz = new JTextField("9",5);
+        JTextField textFieldEndPosz = new JTextField("-9",5);
         textFieldEndPosz.getDocument().addDocumentListener(listener);
         listener.addMapping(textFieldEndPosz.getDocument(), inputData.endPosZ);
         
@@ -369,14 +369,14 @@ public class CameraProject {
      */
     public void loop() {
         //Create new scene objects
-        carrier = new Carrier(-0.5f,0.5f,9f);
+        carrier = new Carrier(-0.5f,0.5f,-9f);
         land=new Land(wWidth, wHeight, "img/tahiti.jpg");
         target=new Target();
 
         //Create new shader and cameras
         Shader shader = new Shader();
-        Camera camera = new Camera(1024,768,new Vector3f(0,0,0f),new Vector3f(0f,0f,10f),35f,0,0);
-        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(0f,0f,10f),35f,0,0);
+        Camera camera = new Camera(1024,768,new Vector3f(0,0,0f),new Vector3f(0f,0f,-10f),35f,0,0);
+        Camera camera2 = new Camera(1024,768,new Vector3f(0,0,9f),new Vector3f(0f,0f,-10f),35f,0,0);
         Camera currentCamera = camera;
         
         int mainWidth=wWidth-300;
@@ -386,8 +386,8 @@ public class CameraProject {
         moving=false;
         stepSize=0.5f;
         
-        Vector3f carrierPos=new Vector3f(0,0,9f);
-        Vector3f targetPos=new Vector3f(1f,0f,9f);
+        Vector3f carrierPos=new Vector3f(0,0,-9f);
+        Vector3f targetPos=new Vector3f(1f,0f,-9f);
 
         boolean takePic=false;
         
@@ -420,7 +420,7 @@ public class CameraProject {
             
             
             targetPos = new Vector3f(inputData.endPosX.getValue(),inputData.endPosY.getValue(),inputData.endPosZ.getValue());
-            camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,10.0f);
+            camera2.focus=new Vector3f(carrierPos.x,carrierPos.y,-10.0f);
             
             glViewport(0,0,mainWidth,mainHeight);
             

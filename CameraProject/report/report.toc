@@ -4,7 +4,7 @@
 \contentsline {section}{Contents}{iv}{section*.3}
 \contentsline {section}{\numberline {1}Introduction}{1}{section.1}
 \contentsline {section}{\numberline {2}Software design}{2}{section.2}
-\contentsline {section}{\numberline {3}Results}{4}{section.3}
-\contentsline {section}{\numberline {4}Conclusions and future works}{8}{section.4}
-\contentsline {section}{References}{11}{section*.14}
-\contentsline {section}{\numberline {A}Installation and usage}{13}{appendix.A}
+\contentsline {section}{\numberline {3}Results}{5}{section.3}
+\contentsline {section}{\numberline {4}Conclusions and future works}{9}{section.4}
+\contentsline {section}{References}{12}{section*.14}
+\contentsline {section}{\numberline {A}Installation and usage}{14}{appendix.A}
