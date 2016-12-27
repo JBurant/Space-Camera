@@ -281,13 +281,13 @@ The trajectory's end position specifies the target location. Last fields are cam
 \caption{Example run of the application\label{GUIExample}}
 \end{figure}
 
-The coordinate system of the rendered left part of the window is classical 3D Cartesian system, which spans from -9 to 9 for the x and -7 to 7 for the y coordinates. As for the z coordinates, it spans from -10 to 0, while -10 being the coordinate of the surface plane. The point z=0 is at the overview, top camera location and -10 is on the surface.
+The coordinate system of the rendered left part of the window is classical 3D Cartesian system, which spans from -9 to 9 for the x (horizontal) and -7 to 7 for the y coordinates (vertical). As for the z coordinates (representing the height), it spans from -10 to 0, while -10 being the coordinate of the surface plane. The point z=0 is at the overview, top camera location and -10 is on the surface.
 
 The figure \ref{AnglesAndAxes} explains the relations of the angles and axes.
 
 \begin{figure}[htb]
 \centering \includegraphics[height=7cm]{AnglesAndAxes.png}
-\caption{Angles and axes of the layout\label{AnglesAndAxes}}
+\caption{Illustration of the angles and the axes of the layout in the developped software.\label{AnglesAndAxes}}
 \end{figure}
 
 Once the simulation starts, the camera switches to view of the camera mounted on the spacecraft, with the specified parameters. The images captured by the spacecraft are rendered and consequently saved into a file. A few examples of such images are presented in the section 3.
